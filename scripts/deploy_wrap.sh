@@ -12,9 +12,9 @@ echo $DEPLOYPATH
 tar -zcvf ../deploy_$NEWVERSION.tar.gz * 
 pwd
 
-ll -l ./
-ll -l ../
+ls -l ./
+ls -l ../
 
 scp -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 ../deploy_$NEWVERSION.tar.gz root@senyu.me:$DEPLOYCOPY
 ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 root@senyu.me "ls -l $DEPLOYCOPY;"
-ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 root@senyu.me ".remote_excute.sh $NEWVERSION $DEPLOYPATH $DEPLOYCOPY"
+ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 root@senyu.me "remote_excute.sh $NEWVERSION $DEPLOYPATH $DEPLOYCOPY"
