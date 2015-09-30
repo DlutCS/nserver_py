@@ -6,13 +6,12 @@ DEPLOYPATH=$2
 DEPLOYCOPY=$3
 
 cd $DEPLOYCOPY
-mv ./deploy_$NEWVERSION.tar.gz $DEPLOYPATH
+cp -f ./deploy_$NEWVERSION.tar.gz $DEPLOYPATH
 cd $DEPLOYPATH
 mkdir -p $NEWVERSION
-tar -zxvf $deploy_$NEWVERSION.tar.gz -C $NEWVERSION
+tar -zxvf ./deploy_$NEWVERSION.tar.gz -C $NEWVERSION
 cd ./$NEWVERSION
 
 pwd
-ll ./
+ls -l ./
 #修改一下uwsgi.ini
-

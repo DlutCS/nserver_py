@@ -9,7 +9,7 @@ export DEPLOYPATH="/home/wwwroot/py.senyu.me/deploy/"
 echo $NEWVERSION
 echo $DEPLOYCOPY
 echo $DEPLOYPATH
-tar -zcvf ../deploy_$NEWVERSION.tar.gz * --exclude=venv
+tar -zcvf ../deploy_$NEWVERSION.tar.gz * --exclude=venv --exclude=ci_scripts
 pwd
 
 ls -l ./
