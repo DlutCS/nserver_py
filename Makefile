@@ -25,7 +25,7 @@ serve:
 	
 prod_serve:
 	. venv/bin/activate
-	sed -e 's,^chdir.*$*,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini > ./../../uwsgi.ini
+	sed -e 's,^chdir.*$$,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini.default > ./../../uwsgi.ini
 	kill `pidof uwsgi`
 
 clean:
