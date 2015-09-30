@@ -1,6 +1,10 @@
 all:
 	make sync
+ifdef DEPLOYOUTPUTDIR
+	make prod_serve
+else
 	make serve
+endif
 
 database:
 	#把生产数据库配置复制到指定位置
@@ -17,14 +21,11 @@ test:
 
 serve:
 	. venv/bin/activate
-	ifdef DEPLOYOUTPUTDIR
-	sed -e 's/^chdir.*$//g' -e "s/\#gitbase=\(.*\)$/\#gitbase=\1\nchdir=\1$(DEPLOYOUTPUTDIR)/" ./../../uwsgi.ini
-	else
 	cat ./../../uwsgi.ini
-	endif
 	
-	
-	# python app.py
+prod_serve:
+	. venv/bin/activate
+	sed -e 's,^chdir.*$*,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini
 
 clean:
 	rm -rf *.pyc
