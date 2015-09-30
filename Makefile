@@ -4,6 +4,7 @@ all:
 
 database:
 	#把生产数据库配置复制到指定位置
+	# if $SERVERMODE == "PROD" then replace database.ini
 
 sync:
 	virtualenv venv
@@ -16,7 +17,13 @@ test:
 
 serve:
 	. venv/bin/activate
+	ifdef DEPLOYOUTPUTDIR
+	sed -e 's/^chdir.*$//g' -e "s/\#gitbase=\(.*\)$/\#gitbase=\1\nchdir=\1$(DEPLOYOUTPUTDIR)/" ./../../uwsgi.ini
+	else
 	cat ./../../uwsgi.ini
+	endif
+	
+	
 	# python app.py
 
 clean:
