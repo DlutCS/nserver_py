@@ -14,7 +14,6 @@ script:
 - echo $SSHPRIVATE | base64 -d >> ~/.ssh/id_rsa
 - chmod 400 ~/.ssh/id_rsa
 - ls -l ~/.ssh
-- cat ~/.ssh/id_rsa
 - ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no root@senyu.me  "cd /home ; ls"
 - echo 'script done'
 - ls -l ./scripts
