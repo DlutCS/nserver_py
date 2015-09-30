@@ -6,7 +6,7 @@ before_install:
  - echo "before_install"
  - echo $SSHPRIVATE | base64 -d >> ~/.ssh/id_rsa
  - chmod 400 ~/.ssh/id_rsa
- - chmod +x ./ci_scripts/*
+ - chmod +x ./scripts/*
 
 install: echo 'install'
 
@@ -30,11 +30,10 @@ script:
 #然后scp到服务器特定目录
 #然后ssh到服务器执行指定脚本
 #此时需要暴露特定$ENV（对对方服务器暴露ENV）
-#deploy:
-#  provider: script
-#  script: ./scripts/test.sh
-after_success:
- - source ci_scripts/deploy_wrap.sh
+deploy:
+  provider: script
+  script: ./scripts/deploy_wrap.sh
+
 #  - eval "$(ssh-agent -s)" #start the ssh agent
 #  - git status
 #  - ls -l
