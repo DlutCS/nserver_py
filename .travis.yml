@@ -21,10 +21,11 @@ script:
 #然后scp到服务器特定目录
 #然后ssh到服务器执行指定脚本
 #此时需要暴露特定$ENV（对对方服务器暴露ENV）
-deploy:
-  provider: script
-  script: ./scripts/test.sh
-#after_success:
+#deploy:
+#  provider: script
+#  script: ./scripts/test.sh
+after_success:
+ - source scripts/test.sh
 #  - eval "$(ssh-agent -s)" #start the ssh agent
 #  - git status
 #  - ls -l
