@@ -14,10 +14,9 @@ script:
 - echo $SSHPRIVATE | base64 -d >> ~/.ssh/id_rsa
 - chmod 400 ~/.ssh/id_rsa
 - ls -l ~/.ssh
-- ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no root@senyu.me  "cd /home ; ls"
+- 
 - echo 'script done'
-- ls -l ./scripts
-- touch newfile
+- echo 'clean'
 
 #在部署环节，暴露当前git 短commit-id，对打包根目录进行打包
 #然后scp到服务器特定目录
