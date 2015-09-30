@@ -2,6 +2,9 @@ all:
 	make sync
 	make serve
 
+database:
+	#把生产数据库配置复制到指定位置
+
 sync:
 	virtualenv venv
 	. venv/bin/activate
