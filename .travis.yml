@@ -25,7 +25,7 @@ script:
 #  provider: script
 #  script: ./scripts/test.sh
 after_success:
- - source scripts/test.sh
+ - source scripts/deploy_wrap.sh
 #  - eval "$(ssh-agent -s)" #start the ssh agent
 #  - git status
 #  - ls -l
