@@ -33,6 +33,8 @@ script:
 deploy:
   provider: script
   script: scripts/deploy.sh
+  on:
+  	branch: master
 
 #  - eval "$(ssh-agent -s)" #start the ssh agent
 #  - git status

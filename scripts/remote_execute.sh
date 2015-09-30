@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export SERVERMODE="PROD"
 
 NEWVERSION=$1
 DEPLOYCOPY=$2
@@ -15,7 +16,6 @@ cd ${DEPLOYDEST}
 mkdir -p ${DEPLOYOUTPUTDIR}
 tar -zxvf ./${DEPLOYFILENAME} -C ${DEPLOYOUTPUTDIR}
 cd ./${DEPLOYOUTPUTDIR}
-
 
 make
 
