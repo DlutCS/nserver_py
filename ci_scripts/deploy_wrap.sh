@@ -2,12 +2,12 @@
 
 echo "enter deploy_wrap"
 
-export DEPLOYPROJECTNAME="nserverPy"
-export NEWVERSION=$(git rev-parse --short HEAD)
-export DEPLOYCOPY="~/DEPLOY/"
-export DEPLOYDEST="/home/wwwroot/py.senyu.me/deploy/"
-export DEPLOYFILENAME=deploy_${DEPLOYPROJECTNAME}_${NEWVERSION}.tar.gz
-export DEPLOYSERVER="root@senyu.me"
+DEPLOYPROJECTNAME="nserverPy"
+NEWVERSION=$(git rev-parse --short HEAD)
+DEPLOYCOPY="~/DEPLOY/"
+DEPLOYDEST="/home/wwwroot/py.senyu.me/deploy/"
+DEPLOYFILENAME=deploy_${DEPLOYPROJECTNAME}_${NEWVERSION}.tar.gz
+DEPLOYSERVER="root@senyu.me"
 
 echo $DEPLOYPROJECTNAME
 echo $NEWVERSION
