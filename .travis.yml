@@ -1,0 +1,33 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+
+
+install: echo 'install'
+ 
+#script层面，先测试，然后把代码build好，删除指定临时文件夹，暴露特定目录作为打包根目录（如果是根目录，需要先clean）
+#保证完成script时，当前pwd切换回来，需要保留`pwd`
+
+script: 
+- echo 'script'
+- echo $SSHPRIVATE | base64 -d >> ~/.ssh/id_rsa
+- chmod 400 ~/.ssh/id_rsa
+- ls -l ~/.ssh
+- ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no root@senyu.me  "cd /home ; ls"
+- echo 'script done'
+- ls -l ./scripts
+- touch newfile
+
+#在部署环节，暴露当前git 短commit-id，对打包根目录进行打包
+#然后scp到服务器特定目录
+#然后ssh到服务器执行指定脚本
+#此时需要暴露特定$ENV（对对方服务器暴露ENV）
+deploy:
+  provider: script
+  script: ./scripts/deploy_wrap.sh
+#after_success:
+#  - eval "$(ssh-agent -s)" #start the ssh agent
+#  - git status
+#  - ls -l
+ 
