@@ -2,19 +2,22 @@
 
 echo "enter deploy_wrap"
 
+export DEPLOYPROJECTNAME="nserverPy"
 export NEWVERSION=$(git rev-parse --short HEAD)
 export DEPLOYCOPY="~/DEPLOY/"
-export DEPLOYPATH="/home/wwwroot/py.senyu.me/deploy/"
+export DEPLOYDEST="/home/wwwroot/py.senyu.me/deploy/"
+export DEPLOYFILENAME=deploy_$DEPLOYPROJECTNAME_$NEWVERSION.tar.gz
+export DEPLOYSERVER="root@senyu.me"
 
+echo $DEPLOYPROJECTNAME
 echo $NEWVERSION
 echo $DEPLOYCOPY
-echo $DEPLOYPATH
-tar -zcvf ../deploy_$NEWVERSION.tar.gz * --exclude=venv --exclude=ci_scripts
-pwd
+echo $DEPLOYDEST
+echo $DEPLOYFILENAME
+echo $DEPLOYSERVER
 
-ls -l ./
-ls -l ../
+tar -zcf ../$DEPLOYFILENAME * --exclude=venv --exclude=ci_scripts
 
-scp -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 ../deploy_$NEWVERSION.tar.gz root@senyu.me:$DEPLOYCOPY
-ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 root@senyu.me "ls -l $DEPLOYCOPY;"
-ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 root@senyu.me "$DEPLOYCOPY/remote_excute.sh $NEWVERSION $DEPLOYPATH $DEPLOYCOPY"
+scp -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 ../$DEPLOYFILENAME $DEPLOYSERVER:$DEPLOYCOPY
+#ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 $DEPLOYSERVER "ls -l $DEPLOYCOPY;"
+ssh -i ~/.ssh/id_rsa  -o StrictHostKeyChecking=no -p 22 $DEPLOYSERVER "$DEPLOYCOPY/remote_excute.sh $NEWVERSION $DEPLOYCOPY $DEPLOYDEST $DEPLOYPROJECTNAME $DEPLOYFILENAME"
