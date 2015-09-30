@@ -1,6 +1,6 @@
 language: python
 python:
-  - "2.6"
+  - "2.7"
 
 before_install:
  - echo "before_install"
@@ -14,13 +14,17 @@ install: echo 'install'
 #保证完成script时，当前pwd切换回来，需要保留`pwd`
 
 script: 
-- echo 'script'
+ - echo 'script'
+ # python
+ - make sync
+ - make test
+
+ - echo 'script done'
 
 
-- echo 'script done'
+ - echo 'clean'
+ - make clean
 
-
-- echo 'clean'
 
 #在部署环节，暴露当前git 短commit-id，对打包根目录进行打包
 #然后scp到服务器特定目录
