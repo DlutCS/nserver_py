@@ -1,9 +1,12 @@
 #!/bin/bash
+echo "enter test"
 
-export NEWVERSION=$(git rev-parse --short HEAD)
 export DEPLOYCOPY="~/DEPLOY"
 export DEPLOYPATH="/home/www/py/senyu.me/deploy/"
+export NEWVERSION=$(git rev-parse --short HEAD)
 
-echo $NEWVERSION
 echo $DEPLOYCOPY
 echo $DEPLOYPATH
+echo $NEWVERSION
+
+echo "leave test"
