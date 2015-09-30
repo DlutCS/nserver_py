@@ -32,7 +32,7 @@ script:
 #此时需要暴露特定$ENV（对对方服务器暴露ENV）
 deploy:
   provider: script
-  script: ./scripts/deploy_wrap.sh
+  script: scripts/deploy.sh
 
 #  - eval "$(ssh-agent -s)" #start the ssh agent
 #  - git status
