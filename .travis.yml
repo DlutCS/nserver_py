@@ -17,7 +17,7 @@ script:
 - 
 - echo 'script done'
 - echo 'clean'
-
+- chmod +x ./scripts/*
 #在部署环节，暴露当前git 短commit-id，对打包根目录进行打包
 #然后scp到服务器特定目录
 #然后ssh到服务器执行指定脚本
