@@ -32,11 +32,11 @@ script:
 #此时需要暴露特定$ENV（对对方服务器暴露ENV）
 deploy:
   - provider: script
-    script: scripts/deploy.sh
+    script: scripts/deploy_production.sh
     on:
       branch: "master"
   - provider: script
-    script: scripts/deploy.sh
+    script: scripts/deploy_prelease.sh
     on:
       branch: "prelease"
 #  - eval "$(ssh-agent -s)" #start the ssh agent
