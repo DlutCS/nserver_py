@@ -21,10 +21,11 @@ test:
 
 serve:
 	. venv/bin/activate
-	cat ./../../uwsgi.ini
+	python app.py
 	
 prod_serve:
 	. venv/bin/activate
+	cat ./../../uwsgi.ini
 	sed -e 's,^chdir.*$$,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini.default > ./../../uwsgi.ini
 	kill `pidof uwsgi`
 
