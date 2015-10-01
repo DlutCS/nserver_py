@@ -1,6 +1,7 @@
 # nserver_py
 Software Comprehensive Practice - News Server
 
+[![Build Status](https://travis-ci.org/DlutCS/nserver_py.svg?branch=master)](https://travis-ci.org/DlutCS/nserver_py)
 
 ## 目录结构
 ```
