@@ -35,23 +35,25 @@ make serve
 ```
 
 ## 建议工作流
-0.fork中央仓库代码到个人仓库
+0.fork origin仓库代码到个人仓库
 
 1.设置remote/upstream链接到中央仓库, remote/origin链接到个人仓库
 
-2.本地master分支跟踪upstream/master,只拉不推, 保持干净
+2.本地`master`分支跟踪upstream/master,只拉不推, 保持干净
 
-3.在本地的dev分支上工作,dev分支跟踪origin/dev, 再次强调,不要在master上开发
+3.在本地的`self-dev`分支上工作,`self-dev`分支跟踪`origin`/`self-dev`, 再次强调,不要在`master`和`prelease`上开发
 
 4.开发之前进行rebase, 具体命令是:
 ```
-git checkout master
+git checkout prelease
 git pull
-git checkout dev 
-git rebase master
+git checkout 'self-dev' 
+git rebase prelease
 ```
 
-5.开发完成后推到origin/dev, 提Pull Request到中央仓库的master分支上,等待review合并
+5.开发完成后推到`self-dev`, 提Pull Request到`origin`/`prelease`分支上,自行review合并跑预发环境的部署
+
+6.发布时把`origin`/`prelease`提Pull Request到`origin`/`master`,同时打`tags`
 
 ## Pull Request规范
 功能开发:
