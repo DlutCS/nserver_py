@@ -3,11 +3,11 @@ all:
 ifdef PRODUCTION
 	make prod_serve
 else
-	ifdef PRELEASE
-		make prelease_serve
-	else
-		make serve
-	endif
+ifdef PRELEASE
+	make prelease_serve
+else
+	make serve
+endif
 endif
 
 database:
@@ -16,26 +16,25 @@ database:
 
 sync:
 	virtualenv venv
-	. venv/bin/activate
-	pip install -r pip-req.txt
-
+	. venv/bin/activate && pip install -r pip-req.txt
+	
 test:
-	. venv/bin/activate
-	python -m unittest discover
+	. venv/bin/activate && python -m unittest discover
+	
 
 serve:
-	. venv/bin/activate
-	python app.py
+	. venv/bin/activate && python app.py
+	
 	
 prod_serve:
-	. venv/bin/activate
+	#. venv/bin/activate
 	supervisorctl restart uwsgi_py
 	#cat ./../../uwsgi.ini
 	#sed -e 's,^chdir.*$$,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini.default > ./../../uwsgi.ini
 	#kill `pidof uwsgi`
 
 prelease_serve:
-	. venv/bin/activate
+	#. venv/bin/activate
 	supervisorctl restart uwsgi_dev_py
 
 clean:
