@@ -18,6 +18,7 @@ sync:
 	virtualenv venv
 	. venv/bin/activate
 	pip install -r pip-req.txt
+	deactivate
 
 test:
 	. venv/bin/activate
