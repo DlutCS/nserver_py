@@ -38,3 +38,9 @@ deploy:
 #  - git status
 #  - ls -l
 
+# slack的travis通知
+notifications:
+  slack:
+    rooms:
+      - dlutcs:FqRyN5OsfreuUzBJXjZcWlG3#travis-ci
+
