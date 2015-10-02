@@ -27,14 +27,11 @@ serve:
 	
 	
 prod_serve:
-	#. venv/bin/activate
+
 	supervisorctl restart uwsgi_py
-	#cat ./../../uwsgi.ini
-	#sed -e 's,^chdir.*$$,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini.default > ./../../uwsgi.ini
-	#kill `pidof uwsgi`
 
 prelease_serve:
-	#. venv/bin/activate
+
 	supervisorctl restart uwsgi_dev_py
 
 clean:
