@@ -4,10 +4,10 @@ from views.admin import LoginView, LogoutView
 from models.user import User
 from models import db
 
-app=Flask(__name__)
-app.config.from_envvar('CONFIG_FILE')
-db.init_app(app)
 
+app = Flask(__name__)
+app.config.from_envvar('CONFIG_FILE', silent=True)
+db.init_app(app)
 
 @app.route('/')
 def hello_world():
