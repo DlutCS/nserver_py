@@ -7,7 +7,7 @@ NEWVERSION=$(git rev-parse --short HEAD)
 DEPLOYCOPY="~/DEPLOY/"
 DEPLOYDEST="/home/wwwroot/py.senyu.me/deploy/"
 DEPLOYFILENAME=deploy_${DEPLOYPROJECTNAME}_${NEWVERSION}.tar.gz
-DEPLOYSERVER="root@senyu.me"
+DEPLOYSERVER="deploy@senyu.me"
 DEPLOYMODE="PRODUCTION"
 
 echo $DEPLOYPROJECTNAME
