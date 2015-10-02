@@ -6,12 +6,12 @@ from models import db
 
 
 app = Flask(__name__)
-app.config.from_envvar('CONFIG_FILE', silent=True)
+app.config.from_pyfile('default.cfg', silent=True)
 db.init_app(app)
 
 @app.route('/')
 def hello_world():
-    return 'hello, world %r' % User.query.all()[0].username
+    return 'test23:43 hello, world %r' % User.query.all()[0].username
 
 @app.errorhandler(404)
 def page_not_found(error):
