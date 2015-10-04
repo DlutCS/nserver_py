@@ -5,7 +5,7 @@ from flask.ext.mysqldb import MySQL
 mysql = MySQL()
 
 class Store():
-    def execute(self, sql, args):
+    def execute(self, sql, args=None):
         cur = mysql.connection.cursor()
         cur.execute(sql, args)
         rows = cur.fetchall()
