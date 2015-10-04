@@ -1,12 +1,10 @@
-from models import db
+# -*- coding: utf-8 -*-
 
-class Category(db.Model):
+from models import Model, store
 
-    __tablename__ = 'tbl_category'
+class Category(Model):
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), unique=True)
-    newses = db.relationship('News', backref='category', lazy='dynamic')
+    __table__ = 'tbl_category'
 
     def __init__(self, name):
         self.name = name

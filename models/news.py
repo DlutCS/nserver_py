@@ -1,26 +1,17 @@
-from models import db
+# -*- coding: utf-8 -*-
 
-class News(db.Model):
+from models import Model, store
 
-    __tablename__ = 'tbl_news'
+class News(Model):
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64))
-    content = db.Column(db.Text)
-    create_time = db.Column(db.DateTime)
-    comment_count = db.Column(db.Integer)
-    read_count = db.Column(db.Integer)
-    like_count = db.Column(db.Integer)
-    dislike_count = db.Column(db.Integer)
-    cover_url = db.Column(db.String(4096))
-    category_id = db.Column(db.Integer, db.ForeignKey('tbl_category.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('tbl_user.id'))
-    _comments = db.relationship('Comment', backref='news', lazy='dynamic')
+    __table__ = 'tbl_news'
 
 
-    def __init__(self, title, content, create_time, comment_count, read_count, 
+    def __init__(self, id, title, alias_title, content, create_time, comment_count, read_count, 
                  like_count, dislike_count, cover_url, category_id, author_id):
+        self.id = id
         self.title = title
+        self.alias_title = alias_title
         self.content = content
         self.create_time = create_time
         self.comment_count = comment_count
@@ -31,7 +22,23 @@ class News(db.Model):
         self.category_id = category_id
         self.author_id = author_id
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+    @property
+    def content_short(self):
+        return self.content[:50]
+
+    @classmethod
+    def get_by_category(cls, cid, order, start=0, limit=10):
+        sql = 'select * from {} where category_id=%s order_by %s desc limit %d,%d'.format(cls.__table__)
+        params = (cid, order, start, limit)
+        rs = store.execute(sql, params)
+        return [cls(**r) for r in rs] if rs else None
+
+    @classmethod
+    def get_all(cls, order, start=0, limit=10):
+        sql = 'select * from {} order by %s desc limit %s,%s'.format(cls.__table__)
+        params = (order, start, limit)
+        rs = store.execute(sql, params)
+        return [cls(**r) for r in rs] if rs else None
+
 
 

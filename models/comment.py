@@ -1,16 +1,10 @@
-from models import db
+# -*- coding: utf-8 -*-
 
-class Comment(db.Model):
+from models import Model, store
 
-    __tablename__ = 'tbl_comment'
+class Comment(Model):
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64))
-    content = db.Column(db.Text)
-    create_time = db.Column(db.DateTime)
-    news_id = db.Column(db.Integer, db.ForeignKey('tbl_news.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('tbl_user.id'))
-
+    __table__ = 'tbl_comment'
 
     def __init__(self, title, content, create_time, news_id, author_id):
         self.title = title

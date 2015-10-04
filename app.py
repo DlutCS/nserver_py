@@ -1,25 +1,18 @@
-from flask import Flask  
-from flask import render_template
-from views.admin import LoginView, LogoutView
-from models.user import User
-from models import db
+# -*- coding: utf-8 -*-
 
+from flask import Flask, Blueprint
+from models import mysql
+from views.api import api
+from views import main
+from utils.json_encoder import ModelEncoder
 
 app = Flask(__name__)
 app.config.from_pyfile('default.cfg', silent=True)
-db.init_app(app)
+app.json_encoder = ModelEncoder
+mysql.init_app(app)
 
-@app.route('/')
-def hello_world():
-    return 'test23:43 hello, world %r' % User.query.all()[0].username
-
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template('404.html')
-
-# admin
-app.add_url_rule('/login', view_func=LoginView.as_view('login'), methods=['GET', 'POST'])
-app.add_url_rule('/logout', view_func=LogoutView.as_view('logout'), methods=['GET'])
+app.register_blueprint(main, url_prefix='')
+app.register_blueprint(api, url_prefix='/api')
 
 
 if __name__ == '__main__':  
