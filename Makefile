@@ -22,7 +22,7 @@ sync:
 	pip install -r pip-req.txt
 
 server_sync:
-	virtualenv ../venv
+	virtualenv ../venv --python=python2.7
 	. ../venv/bin/activate; \
 	pip install -r pip-req.txt
 	
