@@ -3,7 +3,7 @@ import string
 import types
 import datetime
 from functools import wraps
-from quixote.html import htmltext
+# from quixote.html import htmltext
 
 ##    json.py implements a JSON (http://json.org) reader and writer.
 ##    Copyright (C) 2005  Patrick D. Logan
@@ -283,9 +283,9 @@ class JsonWriter(object):
 
     def _write(self, obj):
         ty = type(obj)
-        if ty is htmltext:
-            obj = str(obj)
-            ty = type(obj)
+        # if ty is htmltext:
+        #     obj = str(obj)
+        #     ty = type(obj)
         if ty is types.DictType or isinstance(obj, dict):
             n = len(obj)
             self._append("{")

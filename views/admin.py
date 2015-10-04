@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from flask.views import MethodView
 from flask import redirect, render_template, request
+from models.user import User
+
 
 
 class LoginView(MethodView):
