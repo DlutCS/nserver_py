@@ -17,7 +17,7 @@ database:
 	# if $SERVERMODE == "PROD" then replace database.ini
 
 sync:
-	virtualenv venv
+	virtualenv venv --python=python2.7
 	. venv/bin/activate; \
 	pip install -r pip-req.txt
 
