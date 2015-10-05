@@ -2,12 +2,22 @@
 
 from flask import Blueprint, url_for, redirect
 from flask import request
+from flask import make_response
 from functools import wraps
 from flask import jsonify, abort
 from models.news import News
 from models.category import Category
 
 api = Blueprint('api', __name__)
+
+def allow_cross_domain(res):
+    rst = make_response(res)
+    rst.headers['Access-Control-Allow-Origin'] = '*'
+    rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
+    allow_headers = "Referer,Accept,Origin,User-Agent"
+    rst.headers['Access-Control-Allow-Headers'] = allow_headers
+    return rst
+
 
 def restful(rule, cache={}, **options):
     def _(func):
@@ -23,12 +33,12 @@ def restful(rule, cache={}, **options):
                 res['msg'] = r[1]
             if len(r) > 2:
                 res['data'] = r[2]
-            return jsonify(res)
+            res = jsonify(res)
+            return allow_cross_domain(res)
         endpoint = options.pop('endpoint', func.__name__)
         if cache.get(endpoint, None) is not None:
             endpoint += rule
         cache[endpoint] = 1
-        print cache
         api.add_url_rule(rule, endpoint, wrapper, **options)
         return wrapper
     return _
