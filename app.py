@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from appins import app
 from flask import Flask, Blueprint
 from models import mysql
 from views.api import api
 from views import main
 from utils.json_encoder import ModelEncoder
 
-app = Flask(__name__)
-app.config.from_pyfile('default.cfg', silent=True)
 app.json_encoder = ModelEncoder
 mysql.init_app(app)
+
+@app.context_processor
+def static_processor():
+    def static_for(path):
+        return app.config['STATIC_ROOT'] + path
+    return dict(static_for=static_for)
 
 app.register_blueprint(main, url_prefix='')
 app.register_blueprint(api, url_prefix='/api')

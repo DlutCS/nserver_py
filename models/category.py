@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from models import Model, store
+from utils.memcache import memcache
 
 class Category(Model):
 
@@ -14,6 +15,7 @@ class Category(Model):
         return '<Category %r>' % self.name
 
     @classmethod
+    @memcache('nserver:categories')
     def get_all(cls):
         sql = 'select * from {}'.format(cls.__table__)
         rs = store.execute(sql)
