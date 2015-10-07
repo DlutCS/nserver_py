@@ -1,11 +1,13 @@
 all:
-	make sync
 ifdef PRODUCTION
+	make server_sync
 	make prod_serve
 else
 ifdef PRELEASE
+	make server_sync
 	make prelease_serve
 else
+	make sync
 	make serve
 endif
 endif
@@ -15,28 +17,32 @@ database:
 	# if $SERVERMODE == "PROD" then replace database.ini
 
 sync:
-	virtualenv venv
-	. venv/bin/activate && pip install -r pip-req.txt
+	virtualenv venv --python=python2.7
+	. venv/bin/activate; \
+	pip install -r pip-req.txt
+
+server_sync:
+	virtualenv ../venv --python=python2.7
+	. ../venv/bin/activate; \
+	pip install -r pip-req.txt
 	
 test:
-	. venv/bin/activate && python -m unittest discover
+	. venv/bin/activate; \
+	python -m unittest discover
 	
 
 serve:
-	. venv/bin/activate && python app.py
+	. venv/bin/activate; \
+	python app.py 
 	
 	
 prod_serve:
-	#. venv/bin/activate
+	ln -sf ../prod.cfg ./default.cfg
 	supervisorctl restart uwsgi_py
-	#cat ./../../uwsgi.ini
-	#sed -e 's,^chdir.*$$,chdir=$(DEPLOYOUTPUTDIR),g' ./../../uwsgi.ini.default > ./../../uwsgi.ini
-	#kill `pidof uwsgi`
 
 prelease_serve:
-	#. venv/bin/activate
 	supervisorctl restart uwsgi_dev_py
 
 clean:
 	rm -rf *.pyc
-	rm -r venv/
+	rm -rf venv/

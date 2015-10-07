@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CODE404 | Page Not Found</title>
+    <style>
+    body {
+    	color: rgba(0,0,0,0.75);
+    	background-color: #FEFEFE;
+    	font-smoothing: antialiased;
+    	-ms-font-smoothing: antialiased;
+    	-webkit-font-smoothing: antialiased;
+    	line-height: 1.5;
+    	word-wrap: break-word;
+    }
+    html { height: 100%; }
+    a { text-decoration: none; }
+    * {margin: 0; padding: 0;}
+    .top-header {display: none;}
+    .css-gradient {
+    	background: linear-gradient(		bottom , #EEE 2% , #FFF 35%);
+		background: -o-linear-gradient(		bottom , #EEE 2% , #FFF 35%);
+		background: -ms-linear-gradient(	bottom , #EEE 2% , #FFF 35%);
+		background: -moz-linear-gradient(	bottom , #EEE 2% , #FFF 35%);
+		background: -webkit-linear-gradient(bottom , #EEE 2% , #FFF 35%);
+    }
+    .error-section { }
+    .error-inner-wrap {
+    	width: 900px;
+    	margin: 0 auto;
+    }
+    .error-inner-page {
+    	margin: 0 auto;
+   		text-align: center;
+   		padding-top: 20%;
+    }
+    .error-inner-page h2 {
+    	font-size: 56px;
+    	font-family: Georgia,Cambria,"Times New Roman","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif,Times,serif;
+    	font-weight: bold;
+    	margin-bottom: 50px;
+    }
+    .error-inner-page a {
+    	margin-top: 50px;
+    }
+    .error-info {
+    	padding: 5px 0;
+    	font-size: 20px;
+    	font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;
+    }
+    .error-info.error-info-error {
+    	color: #dd5f0d;
+	}
+    .error-info.error-info-normal {
+    	color: #333;
+    }
+    .button-round {
+    	display: inline-block;
+    	width: 70px;
+    	height: 40px;
+    	padding: 0 20px;
+    	line-height: 40px;
+    	border-radius: 20px;
+    	transition: 0.3s ease all, 0.6s ease background;
+
+    	border: 1px solid #CCC;
+    	color: #888;
+    }
+    .button-round:hover {
+    	border: 1px solid #666;
+    	color: #444;
+    }
+    .button-round:active {
+    	background-color: #F6F6F6;
+    }
+    @media (max-width: 900px) {
+    	.error-inner-wrap {
+    		width: auto;
+    	}
+    }
+    </style>
+</head>
+<body class="css-gradient">
+	<div class="top-header"></div>
+    <div class="error-section">
+    	<div class="error-inner-wrap">
+    	<div class="error-inner-page">
+    		<h2>ERROR 404 <br/>
+    		 = 202 × 2</h2>
+    		<p class="error-info error-info-error">您访问的页面不存在，或正在维修中</p>
+    		<p class="error-info error-info-normal"><i id="error_url">http://loading/</i></p>
+    		<a class="button-round" href="/">返回首页</a>
+    	</div>
+    	</div>
+    </div>
+    <script type="text/javascript">
+    document.getElementById('error_url').innerHTML=location.href;
+    </script>
+</body>
+</html>

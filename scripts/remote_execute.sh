@@ -20,7 +20,7 @@ mkdir -p ${DEPLOYOUTPUTDIR}
 echo "tar -zxvf ${DEPLOYFILENAME} -C ${DEPLOYOUTPUTDIR}"
 tar -zxvf ${DEPLOYFILENAME} -C ${DEPLOYOUTPUTDIR}
 echo "ln -sf ${DEPLOYOUTPUTDIR} current"
-ln -sf ${DEPLOYOUTPUTDIR} current
+ln -sfT ${DEPLOYOUTPUTDIR} current
 
 echo "cd current"
 cd current

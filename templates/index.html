@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{{ static_for('/jquery-1.11.3.min.js') }}"></script>
+</head>
+<body>
+    {{ categories|length }}
+    {% for category in categories %}
+        <li>{{category.name}}</li>
+    {% endfor %}
+
+    {{ news_header|length }}
+
+    {{ news_hot|length }}
+</body>
+</html>

@@ -1,9 +1,12 @@
-#!-coding:utf8
+# -*- coding: utf-8 -*-
 
 import unittest
-import app
+from app import app
 
 class FlaskrTestCase(unittest.TestCase):
+
+    def setUp(self):
+        self.client = app.test_client()
 
     def test_hello(self):
         print "hello"
@@ -12,5 +15,9 @@ class FlaskrTestCase(unittest.TestCase):
         print "world"
 
     def test_app(self):
-        print app.hello_world()
+        print self.client.get('/').data
+
+    def test_login(self):
+        print self.client.get('/login').data
+
 
