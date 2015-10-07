@@ -29,18 +29,21 @@ server_sync:
 test:
 	. venv/bin/activate; \
 	python -m unittest discover
-	
 
 serve:
 	. venv/bin/activate; \
 	python app.py 
 	
-	
 prod_serve:
-	ln -sf ../prod.cfg ./default.cfg
+	cd ./config; \
+	cat prod.cfg >> dev.cfg; \
+	cat /home/deploy/DEPLOY/server.cfg >> dev.cfg
 	supervisorctl restart uwsgi_py
 
 prelease_serve:
+	cd ./config; \
+	cat prelease.cfg >> dev.cfg; \
+	cat /home/deploy/DEPLOY/server.cfg >> dev.cfg
 	supervisorctl restart uwsgi_dev_py
 
 clean:
