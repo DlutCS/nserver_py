@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from flask.ext.mysqldb import MySQL
+import MySQLdb
 
 mysql = MySQL()
 
 class Store():
     def execute(self, sql, args=None):
-        cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor(cursorclass=MySQLdb.cursors.DictCursor)
         cur.execute(sql, args)
         rows = cur.fetchall()
         return rows
