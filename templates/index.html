@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {{ categories|length }}
+    {% for category in categories %}
+        <li>{{category.name}}</li>
+    {% endfor %}
+
+    {{ news_header|length }}
+
+    {{ news_hot|length }}
+</body>
+</html>
