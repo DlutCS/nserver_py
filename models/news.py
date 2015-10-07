@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from models import Model, store
+from models.category import Category
+import random
 
 class News(Model):
 
@@ -47,5 +49,16 @@ class News(Model):
         rs = store.execute(sql, params)
         return cls(**rs[0]) if rs else None
 
+
+    @classmethod
+    def get_random(cls, size):
+        news = []
+        categories = Category.get_all()
+        rand_categories = random.sample(categories, size)
+        for cate in rand_categories:
+            item = cls.get_by_category(cate.id, "create_time", start=0, limit=1)
+            if item:
+                news.append(item[0])
+        return news
 
 
