@@ -1,0 +1,42 @@
+<div class="header-wrap">
+  <div class="header-topinfo">
+  <!-- width: 100% infomation -->
+  </div>
+  <div class="header-content-wrap">
+  <!-- width: 980px information -->
+    <div id="J_header_content" class="header-content">
+      <div id="J_header_moving" class="header-moving-wrap">
+
+      </div>
+      <div class="fl">
+        <div class="logo-block">
+          <i class="icon-logo"></i>
+
+        </div>
+
+      </div>
+      <div class="column fl">
+        <div class="col-block fl">
+          <div class="site-title">阅读</div>
+        </div>
+
+        <ul class="fl">
+          <!-- Sorry for template copies -->
+          {% for category in categories %}
+          <li class="col-item">
+            <div class="header-navitem-wrap">
+              <a href="#">{{category.name}}</a>
+            </div>      
+          </li>
+          {% endfor %}
+        </ul>
+        
+        <div class="col-block fl">
+          <div class="search">
+         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
