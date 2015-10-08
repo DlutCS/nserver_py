@@ -2,13 +2,11 @@
 
 from appins import app
 from flask import Flask, Blueprint
-from models import mysql
 from views.api import api
 from views import main
 from utils.json_encoder import ModelEncoder
 
 app.json_encoder = ModelEncoder
-mysql.init_app(app)
 
 @app.context_processor
 def static_processor():
