@@ -31,13 +31,13 @@ class ApiTestCase(unittest.TestCase):
 
     def test_newslist_latest_with_category(self):
         assert self.app.get('/api/newslist/category/1/').status_code == 200
-        assert self.app.get('/api/newslist/category/1000/').status_code == 500
+        assert self.app.get('/api/newslist/category/1000/').status_code == 200
         assert self.app.get('/api/newslist/category/1/latest/').status_code == 200
-        assert self.app.get('/api/newslist/category/1000/latest/').status_code == 500
+        assert self.app.get('/api/newslist/category/1000/latest/').status_code == 200
 
     def test_newslist_popular_with_category(self):
         assert self.app.get('/api/newslist/category/1/popular/').status_code == 200
-        assert self.app.get('/api/newslist/category/1000/popular/').status_code == 500
+        assert self.app.get('/api/newslist/category/1000/popular/').status_code == 200
 
     def test_not_found(self):
         assert self.app.get('/api/asfdasdfasd/asdf/').status_code == 500

@@ -1,18 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="{{ static_for('/jquery-1.11.3.min.js') }}"></script>
-</head>
-<body>
-    {{ categories|length }}
-    {% for category in categories %}
-        <li>{{category.name}}</li>
-    {% endfor %}
+{% extends "layout.html" %}
 
-    {{ news_header|length }}
+{% block styles %}
+  
+<link rel="stylesheet" type="text/css" href="{{ static_for('/common.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ static_for('/index.css') }}">
+{% endblock %}
 
-    {{ news_hot|length }}
-</body>
-</html>
+{% block scripts %}
+  <script type="text/javascript"  src="{{ static_for('/hot.bundle.js') }}" ></script>
+  <script type="text/javascript"  src="{{ static_for('/common.js') }}" ></script>
+  <script type="text/javascript"  src="{{ static_for('/index.bundle.js') }}" ></script>
+{% endblock %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block header %}
+
+{% include './component/header.html' with context %}
+
+{% endblock %}
+
+{% block content %}
+
+{% include './component/slide.html' with context %}
+
+{% include './content.html' with context %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% include './component/footer.html' with context %}
+
+{% endblock %}

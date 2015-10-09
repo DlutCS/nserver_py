@@ -1,5 +1,5 @@
 from flask import Flask
 
 app = Flask(__name__)
-app.config.from_pyfile('default.cfg', silent=True)
+app.config.from_pyfile('./config/dev.cfg', silent=True)
 

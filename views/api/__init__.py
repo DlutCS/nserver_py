@@ -50,10 +50,8 @@ def index():
 
 @restful('/category/')
 def get_categorys():
-    categorys = Category.get_all()
-    if not categorys:
-        return error(10002, 'empty')
     data = {}
+    categorys = Category.get_all()
     data['categorys'] = categorys
     data['total'] = len(categorys)
     return data
@@ -74,10 +72,8 @@ def news_latest():
     data = {}
     start = request.args.get('start', 0)
     rs = News.get_all('create_time', int(start));
-    if not rs:
-        return error(10001, 'empty')
-    data['count'] = len(rs) if rs else 0
-    data['news.list'] = rs
+    data['count'] = len(rs)
+    data['newslist'] = rs
     return data
 
 @restful('/newslist/popular/')
@@ -85,8 +81,6 @@ def news_popular():
     data = {}
     start = request.args.get('start', 0)
     rs = News.get_all('comment_count', int(start));
-    if not rs:
-        return 10001, 'empty'
     data['count'] = len(rs)
     data['newslist'] = rs
     return data
@@ -97,8 +91,6 @@ def news_by_category_latest(cid):
     data = {}
     start = request.args.get('start', 0)
     rs = News.get_by_category(cid, 'create_time', int(start))
-    if not rs:
-        return error(10001, 'empty')
     data['count'] = len(rs)
     data['newslist'] = rs
     return data
@@ -109,8 +101,6 @@ def news_by_category_popular(cid):
     data = {}
     start = request.args.get('start', 0)
     rs = News.get_by_category(cid, 'comment_count', int(start))
-    if not rs:
-        return error(10001, 'empty')
     data['count'] = len(rs)
     data['newslist'] = rs
     return data

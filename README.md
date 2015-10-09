@@ -59,6 +59,22 @@ git rebase prelease
 
 7.正式上线时把`origin`/`prelease`提Pull Request到`origin`/`master`,同时打`tag`
 
+## 前端模板工作流
+0. 前端仓库 `DlutCS/nclient_asset`
+
+1. 同样含有`master`和`prelease`对应的分支
+
+2. 正常开发时, 可以对模板做数据输出测试，但不能提交对HTML有影响的修改
+
+3. 前端模板 & 资源发布流程
+
+3.1 在`nclient_asset`部署完成`prelease`或`master`到服务器
+
+3.2 获取部署的`commit-id`, 修改`nserver_py`对应环境配置文件中的资源Hash
+
+3.3 正常推送开发
+
+
 ## Pull Request规范
 功能开发:
 ```

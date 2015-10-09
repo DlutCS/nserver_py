@@ -19,6 +19,6 @@ class Category(Model):
     def get_all(cls):
         sql = 'select * from {}'.format(cls.__table__)
         rs = store.execute(sql)
-        return [cls(**r) for r in rs] if rs else None
+        return [cls(**r) for r in rs] if rs else []
 
 

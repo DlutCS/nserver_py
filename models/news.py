@@ -9,7 +9,7 @@ class News(Model):
     __table__ = 'tbl_news'
 
 
-    def __init__(self, id, title, alias_title, content, create_time, comment_count, read_count, 
+    def __init__(self, id, title, alias_title, content, create_time, comment_count, read_count,
                  like_count, dislike_count, cover_url, category_id, author_id):
         self.id = id
         self.title = title
@@ -33,21 +33,21 @@ class News(Model):
         sql = 'select * from {} order by %s desc limit %s,%s'.format(cls.__table__)
         params = (order, start, limit)
         rs = store.execute(sql, params)
-        return [cls(**r) for r in rs] if rs else None
+        return [cls(**r) for r in rs] if rs else []
 
     @classmethod
     def get_by_category(cls, cid, order, start=0, limit=10):
         sql = 'select * from {} where category_id=%s order by %s desc limit %s,%s'.format(cls.__table__)
         params = (cid, order, start, limit)
         rs = store.execute(sql, params)
-        return [cls(**r) for r in rs] if rs else None
+        return [cls(**r) for r in rs] if rs else []
 
     @classmethod
     def get_by_alias(cls, alias):
         sql = 'select * from {} where alias_title=%s'.format(cls.__table__)
         params = (alias, )
         rs = store.execute(sql, params)
-        return cls(**rs[0]) if rs else None
+        return cls(**rs[0]) if rs else []
 
 
     @classmethod
