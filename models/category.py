@@ -20,5 +20,6 @@ class Category(Model):
         sql = 'select * from {}'.format(cls.__table__)
         rs = store.execute(sql)
         return [cls(**r) for r in rs] if rs else []
+        
 
 
