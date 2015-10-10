@@ -3,6 +3,7 @@
 from models import Model, store
 from models.category import Category
 import random
+from utils.consts import *
 
 class News(Model):
 
@@ -29,14 +30,14 @@ class News(Model):
         return self.content[:50]
 
     @classmethod
-    def get_all(cls, order, start=0, limit=10):
+    def get_all(cls, order, start=0, limit=PAGE_LIMIT):
         sql = 'select * from {} order by %s desc limit %s,%s'.format(cls.__table__)
         params = (order, start, limit)
         rs = store.execute(sql, params)
         return [cls(**r) for r in rs] if rs else []
 
     @classmethod
-    def get_by_category(cls, cid, order, start=0, limit=10):
+    def get_by_category(cls, cid, order, start=0, limit=PAGE_LIMIT):
         sql = 'select * from {} where category_id=%s order by %s desc limit %s,%s'.format(cls.__table__)
         params = (cid, order, start, limit)
         rs = store.execute(sql, params)
@@ -48,17 +49,5 @@ class News(Model):
         params = (alias, )
         rs = store.execute(sql, params)
         return cls(**rs[0]) if rs else []
-
-
-    @classmethod
-    def get_random(cls, size):
-        news = []
-        categories = Category.get_all()
-        rand_categories = random.sample(categories, size)
-        for cate in rand_categories:
-            item = cls.get_by_category(cate.id, "create_time", start=0, limit=1)
-            if item:
-                news.append(item[0])
-        return news
 
 
