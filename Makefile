@@ -47,5 +47,5 @@ prelease_serve:
 	supervisorctl restart uwsgi_dev_py
 
 clean:
-	rm -rf *.pyc
+	find -type f -name '*.pyc' -delete
 	rm -rf venv/
