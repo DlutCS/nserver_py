@@ -15,10 +15,11 @@ class Category(Model):
         return '<Category %r>' % self.name
 
     @classmethod
-    @memcache('nserver:categories')
+    @memcache('nserver:categories', 100)
     def get_all(cls):
         sql = 'select * from {}'.format(cls.__table__)
         rs = store.execute(sql)
         return [cls(**r) for r in rs] if rs else []
+        
 
 
