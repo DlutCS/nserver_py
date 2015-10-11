@@ -12,7 +12,9 @@ def execute(sql, args=None):
     return res
 
 def commit():
+    last_id = mysql.connection.insert_id()
     mysql.connection.commit()
+    return last_id
 
 def rollback():
     mysql.connection.rollback()

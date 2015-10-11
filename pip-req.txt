@@ -1,3 +1,6 @@
 Flask==0.10.1
 Flask-MySQLdb==0.2.0
 python-binary-memcached
+Flask-Login
+Flask-OpenID
+wtforms
