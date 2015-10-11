@@ -3,10 +3,7 @@
 import datetime
 from models import Model
 from flask import json
-
-
-DATE_FORMAT = "%Y-%m-%d"
-TIME_FORMAT = "%H:%M:%S"
+from .consts import *
 
 class ModelEncoder(json.JSONEncoder):
     def default(self, o):
