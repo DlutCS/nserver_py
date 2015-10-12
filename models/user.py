@@ -55,7 +55,7 @@ class User(Model):
             return str(self.id)  # python 3
 
     def get_auth_token(self):
-        unicode(self.passwd)
+        return unicode(self.passwd)
 
     @classmethod
     def get_by_token(cls, token):

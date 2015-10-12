@@ -68,6 +68,7 @@ class News(Model):
             'category_id':self.category_id,
             'category':self.category,
             'author_id':self.author_id,
+            'create_time':self.create_time
         }
 
 

@@ -23,6 +23,8 @@ def inject_categories():
 app.register_blueprint(main, url_prefix='')
 app.register_blueprint(api, url_prefix='/api')
 
+from utils.auth import *
+
 
 if __name__ == '__main__':  
     app.run()  
