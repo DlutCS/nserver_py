@@ -30,4 +30,5 @@ class LoginView(MethodView):
 class LogoutView(MethodView):
 
     def get(self):
-        return "log out"
+        logout_user()
+        return redirect(url_for('main.home'))
