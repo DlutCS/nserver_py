@@ -16,6 +16,12 @@ class LoginView(MethodView):
         return render_template('login.html', **locals())
 
     def post(self):
+        #api.login
+        #return redirect(url_for("api.login"), code=307)
+
+        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
+          return '{"msg":"this is ajax"}'
+
         form = LoginForm(request.form)
         if form.validate():
             # add login session 
