@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from views.api import api, restful, error
-from flask import request
+from flask import request, render_template
 from utils.consts import *
 from models.news import News
 from models.category import Category
@@ -30,9 +30,16 @@ def news_latest():
     data = {}
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
+    template  = request.args.get('template', False)
     rs = News.get_all('create_time', int(start), int(limit));
     data['count'] = len(rs)
-    data['newslist'] = rs
+    
+
+    if template:
+        data['template'] = render_template('component/news_loop.html', data=rs)
+    else:
+        data['newslist'] = rs
+    
     return data
 
 @restful('/newslist/popular/')
