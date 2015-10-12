@@ -1,42 +1,14 @@
 <div class="content-wrap">
   <div class="inner clearfix">
     <div id="J_content_left" class="content-section section-left fl">
-      <ul class="news-list">
+      <ul id="J_news_list" class="news-list" data-news-offset="0">
 
       {% for news in news_popular %}
-        <li>
-          <div class="news-block clearfix">
-            <div class="news-image-wrap">
-              
-              <div class="image-box">
-                <span class="badge">BADGE</span>
-                <img class="image" src="{{ news.cover_url }}" />
-              </div>
-              
-            </div>
-            <div class="news-info">
-              <div class="info first">
-                <h3><a class="title">{{ news.title }}</a></h3>
-                
-              </div>
-              <div class="info second">
-                <span class="author">Me</span>
-                <span class="time">2015</span>
-                <span class="comment">[]</span>
-              </div>
-              <div class="info paragraph">
-                <p class="abstract">{{ news.content_short }}</p>
-              </div>
-              <div class="info bottom">
-                <span class="tags">tags</span>
-              </div>
-            </div>
-          </div>
-        </li>
+        {% include './component/news_card.html' with context %}
       {% endfor %}
       </ul>
       <div class="load-more">
-        加载更多
+        <a id="J_news_load_more" href="javscript:void(0);" class="button load-more-button">加载更多</a>
       </div>
     </div>
     <div id="J_content_right" class="content-section section-right fr">
