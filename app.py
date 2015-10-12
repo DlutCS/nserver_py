@@ -7,13 +7,15 @@ from views import main
 from utils.json_encoder import ModelEncoder
 from flask.ext.login import current_user
 from models.category import Category
-
+import re
 app.json_encoder = ModelEncoder
 
 @app.context_processor
 def static_processor():
     def static_for(path):
-        return app.config['STATIC_ROOT'] + path
+        rmEnd = re.compile("/$")
+        rmBegin = re.compile("^/")
+        return rmEnd.sub('',app.config['STATIC_ROOT'])+ '/' + rmBegin.sub('',path)
     return dict(static_for=static_for)
 
 @app.context_processor
