@@ -69,9 +69,6 @@ class User(Model):
     @classmethod
     def validate(cls, username, passwd):
         rs = store.execute('select salt from {} where username=%s'.format(cls.__table__), (username,))
-        print rs
-        if not rs:
-            return None
         salt = rs[0]['salt'] if rs else None
         if not salt:
             return None
