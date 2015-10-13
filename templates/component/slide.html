@@ -3,7 +3,7 @@
     <div class="slide-box-adjust">
 {% for news in news_header[:1] %}
     <div class="slide-clip slide-element-focus slide-clip-2 fl image-wrap">
-      <a class="slide-clip-source ">
+      <a href="{{ '/news/%s' % (news.alias_title or news.id) }}" class="slide-clip-source ">
         <div class="slide-shadow" style="background: url('{{news.cover_url}}') no-repeat center center; background-size: cover;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader('{{news.cover_url}}',sizingMethod='scale');">
         <!--<img class="image" src="{{news.cover_url}}" onerror=";this.className=this.className+' error';"/>-->
         </div>
@@ -12,7 +12,7 @@
 {% endfor %}
 {% for news in news_header[1:] %}
     <div class="slide-clip slide-element-child slide-clip-1 fl image-wrap {{  'slide-focus-child' if loop.index != 0 else '' }}">
-      <a class="slide-clip-source" href="#"  data-slide-id="{{loop.index-1}}">
+      <a href="{{ '/news/%s' % (news.alias_title or news.id) }}" class="slide-clip-source" href="#"  data-slide-id="{{loop.index-1}}">
         <div class="slide-shadow" style="background: url('{{news.cover_url}}') no-repeat center center; background-size: cover;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader('{{news.cover_url}}',sizingMethod='scale');">
         <!-- <img class="image" src="{{news.cover_url}}" onerror=";this.className=this.className+' error';"/> -->
         </div>
