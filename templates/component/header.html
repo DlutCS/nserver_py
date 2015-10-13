@@ -23,8 +23,8 @@
           <!-- Sorry for template copies -->
           {% for category in categories %}
           <li class="col-item">
-            <div class="header-navitem-wrap">
-              <a href="#">{{category.name}}</a>
+            <div class="header-navitem-wrap {{ ('selected' if category.id == cid else '') }}">
+              <a href="{{ ('/category/%s' % category.id) if category.id != 1 else '/'}}">{{category.name}}</a>
             </div>      
           </li>
           {% endfor %}
