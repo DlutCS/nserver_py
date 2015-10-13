@@ -4,7 +4,7 @@ from flask.views import MethodView
 from flask import redirect, render_template, request
 from models.category import Category
 from models.news import News
-from models.form import LoginForm
+from models.forms import LoginForm
 from flask import abort, url_for
 
 
