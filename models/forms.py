@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from wtforms import Form, BooleanField, TextField, PasswordField, validators,StringField
+from wtforms import Form, BooleanField, TextField, PasswordField, validators,StringField, RadioField, DateField
 from .user import User
 import md5
 
@@ -30,6 +30,13 @@ class LoginForm(Form):
 
 
 class RegisterForm(Form):
+
+    username  = StringField(u'用户名', [validators.Length(min=4, max=16)])
+    password  = PasswordField(u'密码', [validators.Length(min=6, max=16)])
+    nickname  = StringField(u'昵称', [validators.Length(min=1, max=16)])
+    gender    = RadioField(u'性别',[validators.InputRequired()], choices=[(1,u'男'),(0,u'女')])
+    birthday  = DateField(u'生日',[validators.InputRequired()], format='%Y-%m-%d')
+    avatar_url= StringField(u'头像', [validators.Length(min=1, max=4000)])
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
