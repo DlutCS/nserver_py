@@ -33,4 +33,18 @@ class HomeCategoryView(MethodView):
         news_popular = News.get_by_category(cid, order='comment_count', start=0)
         form = LoginForm()
         return render_template('index.html', **locals())
-        
+
+
+class HomeNewsView(MethodView):
+
+    def get(self, nid):
+        news = None
+        if not nid:
+            abort(404)
+
+        news = News.get(nid) or News.get_by_alias(nid)
+        if not news:
+            abort(404)
+
+        form = LoginForm()
+        return render_template('news.html', **locals())

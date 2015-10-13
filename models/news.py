@@ -49,6 +49,13 @@ class News(Model):
         return [cls(**r).ldict() for r in rs] if rs else []
 
     @classmethod
+    def get(cls, nid):
+        sql = 'select * from {} where id=%s'.format(cls.__table__)
+        params = (nid, )
+        rs = store.execute(sql, params)
+        return cls(**rs[0]) if rs else None
+
+    @classmethod
     def get_by_alias(cls, alias):
         sql = 'select * from {} where alias_title=%s'.format(cls.__table__)
         params = (alias, )
