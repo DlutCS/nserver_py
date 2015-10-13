@@ -1,13 +1,18 @@
 {% from "./macro/render_field.html" import render_field %}
 <div class="register-wrap  J_register_panel">
 <div id="J_register_panel" class="login-panel">
-  <form method="POST" action="/register/">
+  <form id="J_register_form" method="POST" action="/register/">
     <div class="login-title">
       Welcome Register
     </div>
     <div class="login-body">
         <dl>
-       
+        {{ render_field(regform.username, class="field top", placeholder="用户名", roleClass='nodt') }}
+        {{ render_field(regform.password, class="field top", placeholder="密码", roleClass='nodt') }}
+        {{ render_field(regform.nickname, class="field ", placeholder="昵称", roleClass='nodt') }}
+        {{ render_field(regform.gender, class="field top", placeholder="性别", roleClass='') }}
+        {{ render_field(regform.birthday , class="field top", placeholder="生日（需要格式控制）", roleClass='nodt') }}
+        {{ render_field(regform.avatar_url, class="field", placeholder="头像（需要上传组件）", roleClass='nodt') }}
         </dl>
         <input type="submit" class="submit field" value="提交" />
     </div>

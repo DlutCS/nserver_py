@@ -16,8 +16,6 @@ main.add_url_rule('/register/', view_func=RegisterView.as_view('register'), meth
 main.add_url_rule('/login/', view_func=LoginView.as_view('login'), methods=['GET', 'POST'])
 main.add_url_rule('/logout/', view_func=LogoutView.as_view('logout'), methods=['GET'])
 
-main.add_url_rule('/register/', view_func=RegisterView.as_view('register'), methods=['GET', 'POST'])
-
 main.add_url_rule('/category/<int:cid>/', view_func=HomeCategoryView.as_view('category'), methods=['GET'])
 main.add_url_rule('/news/<nid>/', view_func=HomeNewsView.as_view('news'), methods=['GET'])
 

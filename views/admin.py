@@ -37,11 +37,11 @@ class LogoutView(MethodView):
 class RegisterView(MethodView):
 
     def get(self):
-        form = RegisterForm()
-        return render_template('register.html', form=form)
+        regform = RegisterForm()
+        return render_template('register.html', regform=regform)
 
     def post(self):
-        form = RegisterForm(request.form)
-        if form.validate():
+        regform = RegisterForm(request.form)
+        if regform.validate():
             return redirect(url_for('main.login'))
-        return render_template('register.html', form=form)
+        return render_template('register.html', regform=regform)

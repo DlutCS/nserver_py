@@ -1,16 +1,16 @@
 {% from "./macro/render_field.html" import render_field %}
 <div class="login-wrap J_login_panel">
 <div id="J_login_panel" class="login-panel">
-  <form method="POST" action="/login/">
+  <form id="J_login_form" method="POST" action="/login/">
     <div class="login-title">
       Welcome Login
     </div>
     <div class="login-body">
       
         <dl>
-          {{ render_field(form.username, class="field top", placeholder="用户名", roleClass='nodt') }}
-          {{ render_field(form.password, class="field bottom", placeholder="密码", roleClass='nodt') }}
-          {{ render_field(form.remember, roleClass='inline remeber') }}
+          {{ render_field(loginform.username, class="field top", placeholder="用户名", roleClass='nodt') }}
+          {{ render_field(loginform.password, class="field bottom", placeholder="密码", roleClass='nodt') }}
+          {{ render_field(loginform.remember, roleClass='inline remeber') }}login
         </dl>
         <input type="submit" class="submit field" value="提交" />
       
