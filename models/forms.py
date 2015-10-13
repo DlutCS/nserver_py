@@ -22,7 +22,30 @@ class LoginForm(Form):
         _passwd = md5.new(self.password.data).hexdigest()
         user = User.validate(self.username.data, _passwd)
         if not user:
-            self.username.errors.append('Unknown username or password')
+            self.username.errors.append(u'用户名或密码错误')
+            return False
+        self.user = user
+        return True
+
+
+
+class RegisterForm(Form):
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        self.user = None
+
+    def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            return False
+        if User.get_by_username(self.username.data):
+            self.username.errors.append(u'用户名已存在')
+            return False
+        user = User.create(self.username.data, self.passwd.data, self.nickname.data, 
+                self.gender.data, self.birthday.data, self.avatar_url.data)
+        if not user:
+            self.username.errors.append(u'创建失败')
             return False
         self.user = user
         return True

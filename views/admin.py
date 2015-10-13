@@ -33,6 +33,7 @@ class LogoutView(MethodView):
         logout_user()
         return redirect(url_for('main.home'))
 
+
 class RegisterView(MethodView):
 
     def get(self):
@@ -44,9 +45,6 @@ class RegisterView(MethodView):
         if form.validate():
             return redirect(url_for('main.login'))
         return render_template('register.html', form=form)
-
-
-
 
         
 
