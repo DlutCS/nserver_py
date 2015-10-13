@@ -19,8 +19,8 @@ class LoginView(MethodView):
         #api.login
         #return redirect(url_for("api.login"), code=307)
 
-        if request.headers['X-Requested-With'] == 'XMLHttpRequest':
-          return '{"msg":"this is ajax"}'
+        # if request.headers['X-Requested-With'] == 'XMLHttpRequest':
+            # return '{"msg":"this is ajax"}'
 
         form = LoginForm(request.form)
         if form.validate():
