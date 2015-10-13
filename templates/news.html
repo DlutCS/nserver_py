@@ -1,5 +1,19 @@
 {% extends "layout.html" %}
 
+{% block styles %}
+  
+<link rel="stylesheet" type="text/css" href="{{ static_for('/common.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ static_for('/news.css') }}">
+{% endblock %}
+
+{% block scripts %}
+{% if config['ENV'] == 'DEV' %}
+  <script type="text/javascript"  src="{{ static_for('/hot.bundle.js') }}" ></script>
+{% endif %}
+  <script type="text/javascript"  src="{{ static_for('/common.js') }}" ></script>
+  <script type="text/javascript"  src="{{ static_for('/news.bundle.js') }}" ></script>
+{% endblock %}
+
 {% block title %}
 News
 {% endblock %}
@@ -12,12 +26,18 @@ News
 
 {% block content %}
 
-Content Box - News
+{% include './section/detail.html' with context %}
+
+{% endblock %}
+
+{% block extra %}
+
+{% include './component/login.html' with context %}
 
 {% endblock %}
 
 {% block footer %}
 
-Footer
+{% include './component/footer.html' with context %}
 
 {% endblock %}

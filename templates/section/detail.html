@@ -1,0 +1,23 @@
+<div class="content-wrap content-wrap-nomargin">
+  <div class="inner clearfix">
+    <div id="J_content_left" class="content-section section-left fl">
+      <div class="J_news_wrap" class="news-wrap">
+        
+        <div class="news-box">
+          <div class="title-box">
+          {{ news.title }} - {{ news.create_time }}
+          </div>
+          <div class="detail-box">
+          {{ news.content }}
+          </div>
+          <dlv class="relative-box">
+          {{ 'other' }}
+          </dlv>
+        </div>
+      </div>
+    </div>
+    <div id="J_content_right" class="content-section section-right fr">
+      {% include './component/sidebar.html' with context %}
+    </div>
+  </div>
+</div>
