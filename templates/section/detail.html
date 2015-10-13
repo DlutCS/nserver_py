@@ -5,10 +5,17 @@
         
         <div class="news-box">
           <div class="title-box">
-          {{ news.title }} - {{ news.create_time }}
+          标题:{{ news.title }} - {{ news.create_time }}
           </div>
+
           <div class="detail-box">
-          {{ news.content }}
+            <blockquote>
+              摘要:{{ news.content_short }}
+            </blockquote>
+            <div class="detail-html">
+              内容:{{ news.content }}
+            </div>
+          
           </div>
           <dlv class="relative-box">
           {{ 'other' }}
