@@ -55,6 +55,22 @@ class News(Model):
         rs = store.execute(sql, params)
         return cls(**rs[0]) if rs else None
 
+    @classmethod
+    def create(cls, title, content, cover_url, category_id, author_id,  alias_title=None):
+        sql = '''insert into {}(title, alias_title, content, cover_url, category_id, author_id, create_time)
+                values(%s, %s, %s, %s, %s, %s, %s)
+            '''.format(cls.__table__)
+        params = (title, alias_title, content, cover_url, category_id, author_id, now())
+        try:
+            store.execute(sql, params)
+            _id = store.commit()
+        except e:
+            print "Error", e.args[0], e.args[1]
+            store.rollback()
+        print _id
+        return cls.get(_id) if _id else None
+
+
     def ldict(self):
         return {
             'id': self.id,

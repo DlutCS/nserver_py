@@ -26,6 +26,18 @@ class ModelEncoder(json.JSONEncoder):
                     pass
                     # data[field] = None
             return data
-        return json.JSONEncoder.default(self, o)
+        else:
+            ty = type(o)
+            value = o
+            if ty is datetime.datetime:
+                value = value.strftime("%s %s" % (DATE_FORMAT, TIME_FORMAT))
+            elif ty is datetime.date:
+                value = value.strftime("%s" % (DATE_FORMAT))
+            elif ty is datetime.time:
+                value = value.strftime("%s" % (TIME_FORMAT))
+            else:
+                value = json.JSONEncoder.default(self, o)
+            return value
+        
 
 
