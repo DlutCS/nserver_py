@@ -45,6 +45,3 @@ class RegisterView(MethodView):
         if form.validate():
             return redirect(url_for('main.login'))
         return render_template('register.html', form=form)
-
-        
-

@@ -3,7 +3,7 @@
 {% block styles %}
   
 <link rel="stylesheet" type="text/css" href="{{ static_for('/common.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ static_for('/news.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ static_for('/login.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -11,34 +11,16 @@
   <script type="text/javascript"  src="{{ static_for('/hot.bundle.js') }}" ></script>
 {% endif %}
   <script type="text/javascript"  src="{{ static_for('/common.js') }}" ></script>
-  <script type="text/javascript"  src="{{ static_for('/news.bundle.js') }}" ></script>
+  <script type="text/javascript"  src="{{ static_for('/login.bundle.js') }}" ></script>
 {% endblock %}
 
 {% block title %}
-News
-{% endblock %}
-
-{% block header %}
-
-{% include './component/header.html' with context %}
-
+Login
 {% endblock %}
 
 {% block content %}
 
-{% include './section/detail.html' with context %}
-
-{% endblock %}
-
-{% block extra %}
-
-{% include './component/login.html' with context %}
 {% include './component/register.html' with context %}
 
 {% endblock %}
 
-{% block footer %}
-
-{% include './component/footer.html' with context %}
-
-{% endblock %}
