@@ -55,7 +55,7 @@ class User(Model):
             return str(self.id)  # python 3
 
     def get_auth_token(self):
-        unicode(self.passwd)
+        return unicode(self.passwd)
 
     @classmethod
     def get_by_token(cls, token):
@@ -69,9 +69,6 @@ class User(Model):
     @classmethod
     def validate(cls, username, passwd):
         rs = store.execute('select salt from {} where username=%s'.format(cls.__table__), (username,))
-        print rs
-        if not rs:
-            return None
         salt = rs[0]['salt'] if rs else None
         if not salt:
             return None
@@ -89,7 +86,6 @@ class User(Model):
         sql = '''insert into {}(username, passwd, nickname, salt, gender, birthday, avatar_url, register_time) 
                  values(%s, %s ,%s, %s, %s, %s, %s, %s)'''.format(cls.__table__)
         params = (username, passwd, nickname, salt, gender, birthday, avatar_url, now())
-        print sql % params
         try:
             store.execute(sql, params)
             _id = store.commit()

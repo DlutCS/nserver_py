@@ -1,0 +1,18 @@
+<div class="content-wrap">
+  <div class="inner clearfix">
+    <div id="J_content_left" class="content-section section-left fl">
+      <ul id="J_news_list" class="news-list" data-news-offset="0">
+
+      {% for news in news_popular %}
+        {% include './component/news_card.html' with context %}
+      {% endfor %}
+      </ul>
+      <div class="load-more">
+        <a id="J_news_load_more" href="javascript:void(0);" class="button load-more-button">加载更多</a>
+      </div>
+    </div>
+    <div id="J_content_right" class="content-section section-right fr">
+      {% include './component/sidebar.html' with context %}
+    </div>
+  </div>
+</div>

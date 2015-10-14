@@ -1,0 +1,29 @@
+<div class="content-wrap content-wrap-nomargin">
+  <div class="inner clearfix">
+    <div id="J_content_left" class="content-section section-left fl">
+      <div class="news-wrap">
+        <div class="news-box stacked">
+          <div class="title-box">
+            <h2>标题:{{ news.title }} - {{ news.create_time }}</h2>
+          </div>
+
+          <div class="detail-box">
+            <blockquote>
+              摘要:{{ news.content_short }}
+            </blockquote>
+            <div class="detail-html">
+              内容:{{ news.content }}
+            </div>
+          
+          </div>
+          <dlv class="relative-box">
+          {{ 'other' }}
+          </dlv>
+        </div>
+      </div>
+    </div>
+    <div id="J_content_right" class="content-section section-right fr">
+      {% include './component/sidebar.html' with context %}
+    </div>
+  </div>
+</div>

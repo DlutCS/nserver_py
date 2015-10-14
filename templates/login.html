@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block scripts %}
-{% if config['ENV'] == 'DEVx' %}
+{% if config['ENV'] == 'DEV' %}
   <script type="text/javascript"  src="{{ static_for('/hot.bundle.js') }}" ></script>
 {% endif %}
   <script type="text/javascript"  src="{{ static_for('/common.js') }}" ></script>

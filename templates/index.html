@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block scripts %}
-{% if config['ENV'] == 'DEVx' %}
+{% if config['ENV'] == 'DEV' %}
   <script type="text/javascript"  src="{{ static_for('/hot.bundle.js') }}" ></script>
 {% endif %}
   <script type="text/javascript"  src="{{ static_for('/common.js') }}" ></script>
@@ -28,13 +28,14 @@ Index
 
 {% include './component/slide.html' with context %}
 
-{% include './content.html' with context %}
+{% include './section/homelist.html' with context %}
 
 {% endblock %}
 
 {% block extra %}
 
 {% include './component/login.html' with context %}
+{% include './component/register.html' with context %}
 
 {% endblock %}
 
