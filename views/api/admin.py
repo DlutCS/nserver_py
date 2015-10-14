@@ -5,8 +5,10 @@ from flask import request
 from flask import redirect
 from utils.consts import *
 from models.user import User
+from models.group import Group
 import md5
 from flask.ext.login import login_user, logout_user, login_required
+from flask.ext.login import current_user
 
 
 @restful('/admin/login/', methods=['POST'])
@@ -58,4 +60,34 @@ def register():
     if not user:
         return error(10007, u'创建失败')
     return user.dict()
+
+
+def admin_require(func):
+    action_arr = ['create', 'retrieve', 'update', 'delete']
+    def wrapper():
+        if not current_user.is_authenticated:
+            return error(10111, 'require login')
+        args = func.__name__.split('_')
+        mod, action = args[0], args[1]
+        group_id = User.get(current_user.get_id()).group_id
+        if not group_id:
+            return error(10112, 'user cannot find group id')
+        auth_value = Group.get(group_id).__getattribute__(mod)
+        print "auth_value=", auth_value
+        index = action_arr.index(action)
+        if not (auth_value >> index & 1):
+            return error(10113, 'cannot access this action')
+        return func()
+    return wrapper
+
+
+#--------------news------------------
+@restful('/admin/news/create', methods=['GET'])
+@admin_require
+def news_create():
+    return 'yes'
+
+
+
+
 

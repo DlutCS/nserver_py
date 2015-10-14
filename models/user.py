@@ -14,7 +14,7 @@ class User(Model):
     __table__ = 'tbl_user'
 
     def __init__(self, id, username, passwd, salt, nickname, register_time, 
-                 gender, birthday, avatar_url):
+                 gender, birthday, avatar_url, group_id):
         self.id = id
         self.username = username
         self.passwd = passwd
@@ -24,6 +24,7 @@ class User(Model):
         self.gender = gender
         self.birthday = birthday
         self.avatar_url = avatar_url
+        self.group_id = group_id
 
     def __repr__(self):
         return '<User %r>' % self.username
