@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 PAGE_LIMIT = 10
+PAGE_MAX = 30
 
 DATE_FORMAT = "%Y-%m-%d"
 TIME_FORMAT = "%H:%M:%S"

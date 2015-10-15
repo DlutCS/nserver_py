@@ -14,12 +14,14 @@ class Model(object):
         return cls(**rs[0]) if rs else None
 
     @classmethod
-    def delete(cls, id):
-        sql = 'delete from {} where id=%s'.format(cls.__table__)
-        params = (id,)
+    def delete(cls, ids):
         state = False
+        sql = 'delete from {} where id=%s'.format(cls.__table__)
+        ids = ids if isinstance(ids, list) else [ids]
         try:
-            store.execute(sql, params)
+            for id in ids:
+                params = (id,)
+                store.execute(sql, params)
             store.commit()
             state = True
         except:

@@ -114,9 +114,12 @@ def news_retrieve():
         if not news:
             return error(404, 'news not exist')
         return news
-    start = request.args.get('start', 0)
-    limit = request.args.get('limit', PAGE_LIMIT)
-    return News.get_all('create_time', int(start), int(limit))
+    start = int(request.args.get('start', 0))
+    limit = int(request.args.get('limit', PAGE_LIMIT))
+    if limit > PAGE_MAX:
+        limit = PAGE_MAX
+    news = News.get_all('create_time', start, limit)
+    return { 'start':start, 'count': len(news), 'data': news }
 
 
 @restful('/admin/news/update/', methods=['POST'])
@@ -145,10 +148,10 @@ def news_update():
 @admin_require
 def news_delete():
     try:
-        id = request.form['id']
+        id = request.form['id'].split(',')
     except KeyError:
         return error(400, u'参数错误')
-    if not News.delete(id):
+    if not News.delete(ids):
         return error(10020, 'delete failed')
     return 'delete ok'
 
@@ -176,9 +179,10 @@ def category_retrieve():
         if not category:
             return error(404, 'category not exist')
         return category
-    # start = request.args.get('start', 0)
-    # limit = request.args.get('limit', PAGE_LIMIT)
-    return Category.get_all()
+    start = request.args.get('start', 0)
+    limit = request.args.get('limit', PAGE_LIMIT)
+    categories = Category.get_all()
+    return {'start':start, 'count':len(categories), 'data':categories}
 
 
 @restful('/admin/category/update/', methods=['POST'])
@@ -198,7 +202,7 @@ def category_update():
 @admin_require
 def category_delete():
     try:
-        id = request.form['id']
+        id = request.form['id'].split(',')
     except KeyError:
         return error(400, u'参数错误')
     if not Category.delete(id):
@@ -225,7 +229,10 @@ def user_retrieve():
         return user
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
-    return User.get_all(start, limit)
+    if limit > PAGE_MAX:
+        limit = PAGE_MAX
+    users = User.get_all(start, limit)
+    return {'start':start, 'count':len(users), 'data':users}
 
 
 @restful('/admin/user/update/', methods=['POST'])
@@ -254,7 +261,7 @@ def user_update():
 @admin_require
 def user_delete():
     try:
-        id = request.form['id']
+        id = request.form['id'].split(',')
     except KeyError:
         return error(400, u'参数错误')
     if not Category.delete(id):
