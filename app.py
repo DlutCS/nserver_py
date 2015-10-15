@@ -10,6 +10,10 @@ from models.category import Category
 import re
 app.json_encoder = ModelEncoder
 
+import sys   
+reload(sys)
+sys.setdefaultencoding('utf8') 
+
 @app.context_processor
 def static_processor():
     def static_for(path):

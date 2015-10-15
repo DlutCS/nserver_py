@@ -26,7 +26,7 @@ def restful(rule, cache={}, **options):
         @wraps(func)
         def wrapper(*a, **kw):
             r = func(*a, **kw)
-            if isinstance(r, Response): # a normal Response
+            if issubclass(r.__class__, Response) or issubclass(Response, r.__class__): # a normal Response
                 return r
             res = json.dumps(r)
             return allow_cross_domain(res)

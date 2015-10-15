@@ -16,6 +16,11 @@ class Comment(Model):
     def __repr__(self):
         return '<Comment %r>' % self.content
 
+    @property
+    def author(self):
+        from models.user import User
+        return User.get(self.author_id).dict()
+
     @classmethod
     def create(cls, content, news_id, author_id):
         sql = '''insert into {}(content, news_id, author_id, create_time)
@@ -29,5 +34,18 @@ class Comment(Model):
             print "Error", e.args[0], e.args[1]
             store.rollback()
         return cls.get(_id) if _id else None
+
+    @classmethod
+    def update(cls, id, content, news_id, author_id):
+        sql = '''update {} set content=%s, news_id=%s, author_id=%s where id=%s'''.format(cls.__table__)
+        params = (content, news_id, author_id, id)
+        try:
+            store.execute(sql, params)
+            _id = store.commit()
+        except e:
+            print "Error", e.args[0], e.args[1]
+            store.rollback()
+        return cls.get(_id) if _id else None
+
 
 

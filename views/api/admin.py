@@ -2,10 +2,12 @@
 
 from views.api import api, restful, error
 from flask import request
-from flask import redirect
+from flask import redirect, url_for
 from utils.consts import *
 from models.user import User
 from models.group import Group
+from models.news import News
+from models.category import Category
 import md5
 from flask.ext.login import login_user, logout_user, login_required
 from flask.ext.login import current_user
@@ -56,11 +58,13 @@ def register():
         birthday = '1990-1-1'
     if User.get_by_username(username):
         return error(10008, u'用户已存在')
+    passwd = md5.new(passwd).hexdigest()
     user = User.create(username, passwd, nickname, gender, birthday, avatar_url)
     if not user:
         return error(10007, u'创建失败')
-    return user.dict()
+    return user
 
+#--------------------------------------------------------------------------------
 
 def admin_require(func):
     action_arr = ['create', 'retrieve', 'update', 'delete']
@@ -73,8 +77,9 @@ def admin_require(func):
         if not group_id:
             return error(10112, 'user cannot find group id')
         auth_value = Group.get(group_id).__getattribute__(mod)
-        print "auth_value=", auth_value
+        # print "auth_value=", auth_value
         index = action_arr.index(action)
+        index = len(action_arr) - index - 1
         if not (auth_value >> index & 1):
             return error(10113, 'cannot access this action')
         return func()
@@ -82,12 +87,178 @@ def admin_require(func):
 
 
 #--------------news------------------
-@restful('/admin/news/create', methods=['GET'])
+@restful('/admin/news/create/', methods=['POST'])
 @admin_require
 def news_create():
-    return 'yes'
+    try:
+        title = request.form['title']
+        alias_title = request.form['alias_title']
+        content = request.form['content']
+        cover_url = request.form['cover_url']
+        category_id = request.form['category_id']
+        auther_id = request.form['auther_id']
+    except KeyError:
+        return error(400, u'参数错误')
+    news = News.create(**locals())
+    if not news:
+        return error(100021, 'create news failed')
+    return news
+
+
+@restful('/admin/news/retrieve/', methods=['GET'])
+@admin_require
+def news_retrieve():
+    id = request.args.get('id', 0)
+    if id:
+        news = News.get(id)
+        if not news:
+            return error(404, 'news not exist')
+        return news
+    start = request.args.get('start', 0)
+    limit = request.args.get('limit', PAGE_LIMIT)
+    return News.get_all('create_time', int(start), int(limit))
+
+
+@restful('/admin/news/update/', methods=['POST'])
+@admin_require
+def news_update():
+    keys = []
+    values = []
+    for k, v in request.form.iteritems():
+        if k != 'id':
+            keys.append(k)
+            values.append(v)
+    print keys, values
+
+    try:
+        id = request.form['id']
+        if len(keys) == 0:
+            raise KeyError
+    except KeyError:
+        return error(400, u'参数错误')
+    # clause.decode('gb2312').encode('utf-8')
+    news = News.update(id, keys, values)
+    return news if news else error(10022, 'update news failed')
+
+
+@restful('/admin/news/delete/', methods=['POST'])
+@admin_require
+def news_delete():
+    try:
+        id = request.form['id']
+    except KeyError:
+        return error(400, u'参数错误')
+    if not News.delete(id):
+        return error(10020, 'delete failed')
+    return 'delete ok'
+
+
+#--------------category------------------
+@restful('/admin/category/create/', methods=['POST'])
+@admin_require
+def category_create():
+    try:
+        name = request.form['name']
+    except KeyError:
+        return error(400, u'参数错误')
+    category = Category.create(**locals())
+    if not category:
+        return error(100021, 'create category failed')
+    return category
+
+
+@restful('/admin/category/retrieve/', methods=['GET'])
+@admin_require
+def category_retrieve():
+    id = request.args.get('id', 0)
+    if id:
+        category = Category.get(id)
+        if not category:
+            return error(404, 'category not exist')
+        return category
+    # start = request.args.get('start', 0)
+    # limit = request.args.get('limit', PAGE_LIMIT)
+    return Category.get_all()
+
+
+@restful('/admin/category/update/', methods=['POST'])
+@admin_require
+def category_update():
+    try:
+        name = request.form['name']
+        id = request.form['id']
+    except KeyError:
+        return error(400, u'参数错误')
+    category = Category.update(**locals())
+    if not category:
+        return error(10022, 'update category failed')
+    return category
+
+@restful('/admin/category/delete/', methods=['POST'])
+@admin_require
+def category_delete():
+    try:
+        id = request.form['id']
+    except KeyError:
+        return error(400, u'参数错误')
+    if not Category.delete(id):
+        return error(10020, 'delete failed')
+    return 'delete ok'
 
 
 
+#--------------User------------------
+@restful('/admin/user/create/', methods=['POST'])
+@admin_require
+def user_create():
+    return redirect(url_for('api.register'), code=307)
+
+
+@restful('/admin/user/retrieve/', methods=['GET'])
+@admin_require
+def user_retrieve():
+    id = request.args.get('id', 0)
+    if id:
+        user = User.get(id)
+        if not user:
+            return error(404, 'user not exist')
+        return user
+    start = request.args.get('start', 0)
+    limit = request.args.get('limit', PAGE_LIMIT)
+    return User.get_all(start, limit)
+
+
+@restful('/admin/user/update/', methods=['POST'])
+@admin_require
+def user_update():
+    try:
+        id = request.form['id']
+        username = request.form['username']
+        passwd = request.form['passwd']
+        nickname = request.form['nickname']
+        gender = request.form['gender']
+        birthday = request.form['birthday']
+        avatar_url = request.form['avatar_url']
+        group_id = request.form['group_id']
+        if len(username)==0 or len(passwd)==0:
+            raise(KeyError)
+    except KeyError:
+        return error(400, u'参数错误')
+    user = User.update(**locals())
+    if not user:
+        return error(10022, 'update user failed')
+    return user
+
+
+@restful('/admin/user/delete/', methods=['POST'])
+@admin_require
+def user_delete():
+    try:
+        id = request.form['id']
+    except KeyError:
+        return error(400, u'参数错误')
+    if not Category.delete(id):
+        return error(10020, 'delete failed')
+    return 'delete ok'
 
 

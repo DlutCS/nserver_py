@@ -33,6 +33,18 @@ class Category(Model):
             store.rollback()
         return cls.get(_id) if _id else None
 
+    @classmethod
+    def update(cls, id, name):
+        sql = 'update {} set name=%s where id=%s'.format(cls.__table__)
+        params = (name, id)
+        try:
+            store.execute(sql, params)
+            _id = store.commit()
+        except e:
+            print "Error", e.args[0], e.args[1]
+            store.rollback()
+        return cls.get(_id) if _id else None
+
 
 
 

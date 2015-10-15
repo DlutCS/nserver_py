@@ -12,15 +12,15 @@ from flask import flash
 class LoginView(MethodView):
 
     def get(self):
-        form = LoginForm()
+        loginform = LoginForm()
         return render_template('login.html', **locals())
 
     def post(self):
-        form = LoginForm(request.form)
-        if form.validate():
+        loginform = LoginForm(request.form)
+        if loginform.validate():
             # add login session 
-            print u'Successfully logged in as %s' % form.user.username
-            login_user(form.user, remember=form.remember.data)
+            print u'Successfully logged in as %s' % loginform.user.username
+            login_user(loginform.user, remember=loginform.remember.data)
             return redirect('/')
         else:
             # return error
