@@ -63,6 +63,12 @@ class User(Model):
         rs = store.execute(sql, params)
         return cls(**rs[0]) if rs else None
 
+    @classmethod
+    def get_total(cls):
+        sql = '''select count(*) as total from {}'''.format(cls.__table__)
+        rs  = store.execute(sql)
+        return rs[0]['total']
+
     #----end auth
     
     @classmethod

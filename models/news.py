@@ -63,6 +63,12 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    def get_total(cls):
+        sql = '''select count(*) as total from {}'''.format(cls.__table__)
+        rs  = store.execute(sql)
+        return rs[0]['total']
+
+    @classmethod
     def create(cls, title, content, cover_url, category_id, author_id,  alias_title=None):
         sql = '''insert into {}(title, alias_title, content, cover_url, category_id, author_id, create_time)
                 values(%s, %s, %s, %s, %s, %s, %s)
@@ -76,7 +82,6 @@ class News(Model):
             store.rollback()
         print _id
         return cls.get(_id) if _id else None
-
 
     def ldict(self):
         return {

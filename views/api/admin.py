@@ -114,12 +114,17 @@ def news_retrieve():
         if not news:
             return error(404, 'news not exist')
         return news
-    start = int(request.args.get('start', 0))
-    limit = int(request.args.get('limit', PAGE_LIMIT))
+
+    start = request.args.get('start', 0)
+    limit = request.args.get('limit', PAGE_LIMIT)
     if limit > PAGE_MAX:
         limit = PAGE_MAX
-    news = News.get_all('create_time', start, limit)
-    return { 'start':start, 'count': len(news), 'data': news }
+    data = {}
+    data['start'] = start
+    data['data'] = News.get_all('create_time', int(start), int(limit))
+    data['count'] = len(data['data'])
+    data['total'] = News.get_total()
+    return data
 
 
 @restful('/admin/news/update/', methods=['POST'])
@@ -179,10 +184,17 @@ def category_retrieve():
         if not category:
             return error(404, 'category not exist')
         return category
-    start = request.args.get('start', 0)
-    limit = request.args.get('limit', PAGE_LIMIT)
-    categories = Category.get_all()
-    return {'start':start, 'count':len(categories), 'data':categories}
+
+    # start = request.args.get('start', 0)
+    # limit = request.args.get('limit', PAGE_LIMIT)
+    # category还要start??, 
+    data = {}
+    data['start'] = start
+    data['data'] = Category.get_all()
+    data['count'] = len(data['data'])
+
+    return data
+
 
 
 @restful('/admin/category/update/', methods=['POST'])
@@ -229,11 +241,16 @@ def user_retrieve():
         return user
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
+
     if limit > PAGE_MAX:
         limit = PAGE_MAX
-    users = User.get_all(start, limit)
-    return {'start':start, 'count':len(users), 'data':users}
 
+    data = {}
+    data['start'] = start
+    data['data'] = User.get_all(start, limit)
+    data['count'] = len(data['data'])
+    data['total'] = User.get_total()
+    return data
 
 @restful('/admin/user/update/', methods=['POST'])
 @admin_require
