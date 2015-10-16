@@ -116,7 +116,7 @@ def news_retrieve():
         return news
 
     start = request.args.get('start', 0)
-    limit = request.args.get('limit', PAGE_LIMIT)
+    limit = int(request.args.get('limit', PAGE_LIMIT))
     if limit > PAGE_MAX:
         limit = PAGE_MAX
     data = {}
@@ -156,7 +156,7 @@ def news_delete():
         id = request.form['id'].split(',')
     except KeyError:
         return error(400, u'参数错误')
-    if not News.delete(ids):
+    if not News.delete(id):
         return error(10020, 'delete failed')
     return 'delete ok'
 
@@ -186,7 +186,7 @@ def category_retrieve():
         return category
 
     # start = request.args.get('start', 0)
-    # limit = request.args.get('limit', PAGE_LIMIT)
+    # limit = int(request.args.get('limit', PAGE_LIMIT))
     # category还要start??, 
     data = {}
     data['start'] = start
@@ -240,7 +240,7 @@ def user_retrieve():
             return error(404, 'user not exist')
         return user
     start = request.args.get('start', 0)
-    limit = request.args.get('limit', PAGE_LIMIT)
+    limit = int(request.args.get('limit', PAGE_LIMIT))
 
     if limit > PAGE_MAX:
         limit = PAGE_MAX
