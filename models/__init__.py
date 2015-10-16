@@ -14,18 +14,36 @@ class Model(object):
         return cls(**rs[0]) if rs else None
 
     @classmethod
-    def delete(cls, id):
-        sql = 'delete from {} where id=%s'.format(cls.__table__)
-        params = (id,)
+    def delete(cls, ids):
         state = False
+        sql = 'delete from {} where id=%s'.format(cls.__table__)
+        ids = ids if isinstance(ids, list) else [ids]
         try:
-            store.execute(sql, params)
+            for id in ids:
+                params = (id,)
+                store.execute(sql, params)
             store.commit()
             state = True
-        except e:
-            print "Error", e.args[0], e.args[1]
+        except:
             store.rollback()
         return state
+
+    @classmethod
+    def update(cls, id, keys, values):
+        keyformat = '=%s,'.join(keys) + '=%s'
+        sql = 'update {} set {} where id=%s'.format(cls.__table__, keyformat)
+        values.append(int(id))
+        params = tuple(values)
+        rcnt = 0
+        print sql % params
+        try:
+            rcnt = store.execute(sql, params, True)
+            store.commit()
+        except:
+            print 'except:', sql % params
+            store.rollback()
+        print 'rcnt=', rcnt
+        return cls.get(id) if rcnt > 0 else None
 
 
 
