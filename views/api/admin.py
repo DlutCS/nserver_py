@@ -152,6 +152,8 @@ def news_update():
 @restful('/admin/news/delete/', methods=['POST'])
 @admin_require
 def news_delete():
+    print request.form.getlist('id')
+
     try:
         id = request.form['id'].split(',')
     except KeyError:
@@ -213,6 +215,9 @@ def category_update():
 @restful('/admin/category/delete/', methods=['POST'])
 @admin_require
 def category_delete():
+
+
+
     try:
         id = request.form['id'].split(',')
     except KeyError:
