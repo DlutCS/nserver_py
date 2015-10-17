@@ -1,4 +1,7 @@
 <div class="content-wrap">
+
+
+{% if news_popular %}
   <div class="inner clearfix">
     <div id="J_content_left" class="content-section section-left fl">
       <ul id="J_news_list" class="news-list" data-news-offset="0">
@@ -8,11 +11,19 @@
       {% endfor %}
       </ul>
       <div class="load-more">
-        <a id="J_news_load_more" href="javascript:void(0);" class="button load-more-button">加载更多</a>
+        <a id="J_news_load_more" href="javascript:void(0);" class="button load-more-button">
+        <span class="ready">加载更多</span>
+        <span class="loading">正在加载</span>
+        </a>
       </div>
     </div>
     <div id="J_content_right" class="content-section section-right fr">
       {% include './component/sidebar.html' with context %}
     </div>
   </div>
+{% else %}
+  <!-- 没有新闻直接留空 -->
+{% endif %}
+  
+
 </div>
