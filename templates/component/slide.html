@@ -1,5 +1,6 @@
 <div id="J_slide" class="slide-wrap">
   <div class="slide-box">
+{% if news_header %}
     <div class="slide-box-adjust">
 {% for news in news_header[:1] %}
     <div class="slide-clip slide-element-focus slide-clip-2 fl image-wrap">
@@ -30,6 +31,15 @@
 {% endfor %}
 
     </div>
-     
+{% else %}   
+
+<div class="slide-blank">
+  <div class="blank-box">
+    <h2>ERROR @x@</h2>
+    <p class="err-info"> 类目的新闻被小作坊组长吃掉了 TAT</p>
+  </div>
+</div>
+
+{% endif %}
   </div>
 </div>
