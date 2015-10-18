@@ -1,0 +1,28 @@
+{% extends "admin/layout.html" %}
+
+{% block styles %}
+  
+<link rel="stylesheet" type="text/css" href="{{ static_admin_for('/foundation.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ static_admin_for('/admin.css') }}">
+{% endblock %}
+
+{% block scripts %}
+{% if config['ENV'] == 'DEV' %}
+  <script type="text/javascript"  src="{{ static_admin_for('/hot.bundle.js') }} " ></script>
+{% endif %}
+  <!--<script type="text/javascript"  src="//127.0.0.1:9090/angular.js"></script>-->
+  <script type="text/javascript"  src="{{ static_admin_for('/admin.bundle.js') }}" ></script>
+{% endblock %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+
+{% block body %}
+<div data-ui-view="main" class="home-wrap"></div>
+<div data-ui-view="footer" class="footer-wrap"></div>
+
+
+{% endblock %}
+

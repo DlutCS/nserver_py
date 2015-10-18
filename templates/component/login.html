@@ -10,8 +10,9 @@
         <dl>
           {{ render_field(loginform.username, class="field top", placeholder="用户名", roleClass='nodt') }}
           {{ render_field(loginform.password, class="field bottom", placeholder="密码", roleClass='nodt') }}
-          {{ render_field(loginform.remember, roleClass='inline remeber') }}login
+          {{ render_field(loginform.remember, roleClass='inline remeber') }}
         </dl>
+        <input type="hidden" name="callback" value="{{callback}}" />
         <input type="submit" class="submit field" value="提交" />
       
     </div>

@@ -10,13 +10,22 @@ from models.category import Category
 import re
 app.json_encoder = ModelEncoder
 
+import sys   
+reload(sys)
+sys.setdefaultencoding('utf8') 
+
 @app.context_processor
 def static_processor():
     def static_for(path):
         rmEnd = re.compile("/$")
         rmBegin = re.compile("^/")
         return rmEnd.sub('',app.config['STATIC_ROOT'])+ '/' + rmBegin.sub('',path)
-    return dict(static_for=static_for)
+
+    def static_admin_for(path):
+        rmEnd = re.compile("/$")
+        rmBegin = re.compile("^/")
+        return rmEnd.sub('',app.config['STATIC_ADMIN_ROOT'])+ '/' + rmBegin.sub('',path)
+    return dict(static_admin_for=static_admin_for, static_for=static_for)
 
 @app.context_processor
 def inject_categories():

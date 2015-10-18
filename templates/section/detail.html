@@ -4,21 +4,62 @@
       <div class="news-wrap">
         <div class="news-box stacked">
           <div class="title-box">
-            <h2>标题:{{ news.title }} - {{ news.create_time }}</h2>
+            <h2>{{ news.title }}</h2>
           </div>
-
+          <div class="info-box">
+            <span class="author">Me看阅读</span>
+            <span class="dividor">｜</span>
+            <span class="time">2015-10-17 01:55</span>
+          </div>
           <div class="detail-box">
             <blockquote>
-              摘要:{{ news.content_short }}
+              <span class="abstract-title">摘要:</span>
+              {{ news.content_short }}
             </blockquote>
             <div class="detail-html">
-              内容:{{ news.content }}
+              <p>{{ news.content }}</p>
             </div>
           
           </div>
           <dlv class="relative-box">
-          {{ 'other' }}
+            分享给：微信
           </dlv>
+          <div class="comment-box">
+            <h2>评论</h2>
+            
+              <div class="submit-commont submit-primary">
+                提交评论框
+              </div>
+              <ul class="commonts">
+                <li>
+                  <div class="comment-item">
+                    评论内容框
+                  </div>
+                </li>
+                <li>
+                  <div class="comment-item">
+                    评论内容框
+                  </div>
+                </li>
+                <li>
+                  <div class="comment-item">
+                    评论内容框
+                  </div>
+                </li>
+                <li>
+                  <div class="comment-item">
+                    评论内容框
+                  </div>
+                </li>
+                <li>
+                  <div class="comment-item">
+                    评论内容框
+                  </div>
+                </li>
+                
+              </ul>
+            
+          </div>
         </div>
       </div>
     </div>

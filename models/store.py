@@ -4,12 +4,13 @@ import MySQLdb
 
 mysql = MySQL(app)
 
-def execute(sql, args=None):
+def execute(sql, args=None, rowscnt=False):
     cur = mysql.connection.cursor(cursorclass=MySQLdb.cursors.DictCursor)
     cur.execute(sql, args)
-    res = cur.fetchall()
+    rs = cur.fetchall()
+    cnt = cur.rowcount
     cur.close()
-    return res
+    return rs if not rowscnt else cnt
 
 def commit():
     last_id = mysql.connection.insert_id()

@@ -18,9 +18,9 @@ class ApiTestCase(unittest.TestCase):
         assert self.app.get('/api/categorys/').status_code == 500
 
     def test_news(self):
-        assert self.app.get('/api/news/1/').status_code == 200
-        assert self.app.get('/api/news/1000/').status_code == 500
-        assert self.app.get('/api/news/nasa-water/').status_code == 200
+        assert self.app.get('/api/news/68/').status_code == 200
+        assert self.app.get('/api/news/100000/').status_code == 500
+        assert self.app.get('/api/news/jackma/').status_code == 200
 
     def test_newslist_latest(self):
         assert self.app.get('/api/newslist/').status_code == 200
