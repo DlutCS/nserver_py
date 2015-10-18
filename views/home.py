@@ -47,8 +47,9 @@ class HomeNewsView(MethodView):
         if not news:
             abort(404)
 
+        news.update(news.id, 'read_count', news.read_count+1)
         loginform = LoginForm()
         regform = RegisterForm()
-        news_hover = News.get_all(order='id', start=0)
+        news_popular = News.get_all(order='id', start=0)
         
         return render_template('news.html', **locals())

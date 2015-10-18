@@ -191,7 +191,7 @@ def category_retrieve():
     # limit = int(request.args.get('limit', PAGE_LIMIT))
     # category还要start??, 
     data = {}
-    data['start'] = start
+    data['start'] = 0
     data['data'] = Category.get_all()
     data['count'] = len(data['data'])
 
