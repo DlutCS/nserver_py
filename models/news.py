@@ -28,7 +28,10 @@ class News(Model):
 
     @property
     def content_short(self):
-        return self.content[:MAX_SHORT_CONTENT]
+        import re
+        
+        htmlStruct = re.compile(r'<[^>]+>')
+        return htmlStruct.sub('',self.content)[:MAX_SHORT_CONTENT]
 
     @property
     def category(self):
@@ -36,15 +39,15 @@ class News(Model):
 
     @classmethod
     def get_all(cls, order, start=0, limit=PAGE_LIMIT):
-        sql = 'select * from {} order by %s desc limit %s,%s'.format(cls.__table__)
-        params = (order, start, limit)
+        sql = 'select * from {} order by {} limit %s,%s'.format(cls.__table__, order)
+        params = (start, limit)
         rs = store.execute(sql, params)
         return [cls(**r).ldict() for r in rs] if rs else []
 
     @classmethod
     def get_by_category(cls, cid, order, start=0, limit=PAGE_LIMIT):
-        sql = 'select * from {} where category_id=%s order by %s desc limit %s,%s'.format(cls.__table__)
-        params = (cid, order, start, limit)
+        sql = 'select * from {} where category_id=%s order by {} limit %s,%s'.format(cls.__table__, order)
+        params = (cid, start, limit)
         rs = store.execute(sql, params)
         return [cls(**r).ldict() for r in rs] if rs else []
 

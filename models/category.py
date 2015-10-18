@@ -17,7 +17,7 @@ class Category(Model):
     @classmethod
     @memcache('nserver:categories', 100)
     def get_all(cls):
-        sql = 'select * from {}'.format(cls.__table__)
+        sql = 'select * from {} order by id asc'.format(cls.__table__)
         rs = store.execute(sql)
         return [cls(**r) for r in rs] if rs else []
         

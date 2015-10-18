@@ -31,7 +31,7 @@ def news_latest():
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
     template  = request.args.get('template', False)
-    rs = News.get_all('create_time', int(start), int(limit));
+    rs = News.get_all('create_time desc', int(start), int(limit));
     data['count'] = len(rs)
     
 
@@ -47,7 +47,7 @@ def news_popular():
     data = {}
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
-    rs = News.get_all('comment_count', int(start), int(limit));
+    rs = News.get_all('read_count desc', int(start), int(limit));
     data['count'] = len(rs)
     data['newslist'] = rs
     return data
@@ -59,9 +59,9 @@ def news_by_category_latest(cid):
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
     if cid == 1: # 头条内容
-        rs = News.get_all('create_time', int(start), int(limit))
+        rs = News.get_all('create_time desc', int(start), int(limit))
     else:
-        rs = News.get_by_category(cid, 'create_time', int(start), int(limit))
+        rs = News.get_by_category(cid, 'create_time desc', int(start), int(limit))
     data['count'] = len(rs)
     data['newslist'] = rs
     return data
@@ -72,7 +72,7 @@ def news_by_category_popular(cid):
     data = {}
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
-    rs = News.get_by_category(cid, 'comment_count', int(start), int(limit))
+    rs = News.get_by_category(cid, 'read_count desc', int(start), int(limit))
     data['count'] = len(rs)
     data['newslist'] = rs
     return data
