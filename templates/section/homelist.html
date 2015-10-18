@@ -1,12 +1,12 @@
 <div class="content-wrap">
 
 
-{% if news_popular %}
+{% if news_latest %}
   <div class="inner clearfix">
     <div id="J_content_left" class="content-section section-left fl">
       <ul id="J_news_list" class="news-list" data-news-offset="0">
 
-      {% for news in news_popular %}
+      {% for news in news_latest %}
         {% include './component/news_card.html' with context %}
       {% endfor %}
       </ul>

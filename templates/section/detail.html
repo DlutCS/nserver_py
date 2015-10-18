@@ -14,10 +14,14 @@
           <div class="detail-box">
             <blockquote>
               <span class="abstract-title">摘要:</span>
+              {% autoescape false %}
               {{ news.content_short }}
+              {% endautoescape %}
             </blockquote>
             <div class="detail-html">
-              <p>{{ news.content }}</p>
+              {% autoescape false %}
+              {{ news.content }}
+              {% endautoescape %}
             </div>
           
           </div>

@@ -5,7 +5,7 @@
         <h3 class="title-inner"><b>7</b>天热门榜</h3>
       </div>
       <ol class="order-list">
-    {% for news in news_hover %}
+    {% for news in news_popular %}
         <li>
           <a href="{{ '/news/%s' % (news.alias_title or news.id) }}">{{ news.title }}</a>          
         </li>

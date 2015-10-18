@@ -21,7 +21,9 @@
         <span class="comment">评论 0</span>
       </div>
       <div class="info paragraph">
+      {% autoescape false %}
         <p class="abstract">{{ news.content_short }}</p>
+      {% endautoescape %}
       </div>
       <div class="info bottom">
         <span class="tags">百度</span>

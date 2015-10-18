@@ -121,7 +121,7 @@ def news_retrieve():
         limit = PAGE_MAX
     data = {}
     data['start'] = start
-    data['data'] = News.get_all('create_time', int(start), int(limit))
+    data['data'] = News.get_all('create_time desc', int(start), int(limit))
     data['count'] = len(data['data'])
     data['total'] = News.get_total()
     return data
