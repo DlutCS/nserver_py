@@ -29,13 +29,17 @@ class News(Model):
     @property
     def content_short(self):
         import re
-        
         htmlStruct = re.compile(r'<[^>]+>')
         return htmlStruct.sub('',self.content)[:MAX_SHORT_CONTENT]
 
     @property
     def category(self):
-        return Category.get(self.category_id).name
+        return Category.get_dict()[self.category_id].name
+
+    @property
+    def author(self):
+        from models.user import User
+        return User.get_dict()[self.author_id].nickname
 
     @classmethod
     def get_all(cls, order, start=0, limit=PAGE_LIMIT):
@@ -43,6 +47,12 @@ class News(Model):
         params = (start, limit)
         rs = store.execute(sql, params)
         return [cls(**r).ldict() for r in rs] if rs else []
+
+    @classmethod
+    def get_dict(cls, order, start=0, limit=PAGE_LIMIT):
+        values = cls.get_all(order, start, limit)
+        keys = [ item.ldict()['id'] for item in values ]
+        return dict(zip(keys,values))
 
     @classmethod
     def get_by_category(cls, cid, order, start=0, limit=PAGE_LIMIT):
@@ -99,7 +109,8 @@ class News(Model):
             'category_id':self.category_id,
             'category':self.category,
             'author_id':self.author_id,
-            'create_time':self.create_time
+            'create_time':self.create_time,
+            'author': self.author
         }
 
 

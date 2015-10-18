@@ -21,6 +21,14 @@ class Category(Model):
         rs = store.execute(sql)
         return [cls(**r) for r in rs] if rs else []
         
+
+    @classmethod
+    @memcache('nserver:categories_dicts', 100)
+    def get_dict(cls):
+        values = cls.get_all()
+        keys = [ item.dict()['id'] for item in values ]
+        return dict(zip(keys,values))
+
     @classmethod
     def create(cls, name):
         sql = 'insert into {}(name) values(%s)'.format(cls.__table__)
@@ -45,7 +53,11 @@ class Category(Model):
             store.rollback()
         return cls.get(_id) if _id else None
 
-
+    def dict(self):
+        return {
+            'id':self.id,
+            'name':self.name
+        }
 
 
 

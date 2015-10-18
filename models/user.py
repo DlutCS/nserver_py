@@ -8,6 +8,7 @@ from utils.consts import now
 import md5
 import random, string
 import datetime
+from utils.memcache import memcache
 
 class User(Model):
 
@@ -30,12 +31,22 @@ class User(Model):
         return '<User %r>' % self.username
 
     @classmethod
-    def get_all(cls, start, limit):
-        sql = 'select * from {} limit %s,%s'.format(cls.__table__)
-        params = (start, limit)
+    def get_all(cls, start=0, limit=0):
+        if start or limit:
+            sql = 'select * from {} {}'.format(cls.__table__, 'limit %s,%s')
+            params = (start, limit)
+        else:
+            sql = 'select * from {} '.format(cls.__table__)
+            params = ()
         rs = store.execute(sql, params)
         return [cls(**r) for r in rs] if rs else None
-        
+
+    @classmethod
+    @memcache('nserver:users_dict', 100)
+    def get_dict(cls):
+        values = cls.get_all()
+        keys = [ item.dict()['id'] for item in values ]
+        return dict(zip(keys,values))        
 
     #----for authertic
     def is_authenticated(self):
