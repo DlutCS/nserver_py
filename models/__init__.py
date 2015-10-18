@@ -30,6 +30,9 @@ class Model(object):
 
     @classmethod
     def update(cls, id, keys, values):
+        keys = keys if isinstance(keys, list) else [keys]
+        values = values if isinstance(values, list) else [values]
+
         keyformat = '=%s,'.join(keys) + '=%s'
         sql = 'update {} set {} where id=%s'.format(cls.__table__, keyformat)
         values.append(int(id))
