@@ -49,6 +49,6 @@ class HomeNewsView(MethodView):
 
         loginform = LoginForm()
         regform = RegisterForm()
-        news_hover = News.get_all(order='id', start=0)
+        news_popular = News.get_all(order='id', start=0)
         
         return render_template('news.html', **locals())
