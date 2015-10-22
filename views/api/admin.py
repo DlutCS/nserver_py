@@ -110,7 +110,7 @@ def news_create():
 def news_retrieve():
     id = request.args.get('id', 0)
     if id:
-        news = News.get(id)
+        news = News.get(id=id)
         if not news:
             return error(404, 'news not exist')
         return news
@@ -121,7 +121,7 @@ def news_retrieve():
         limit = PAGE_MAX
     data = {}
     data['start'] = start
-    data['data'] = News.get_all('create_time', int(start), int(limit))
+    data['data'] = News.get_all('create_time desc', int(start), int(limit))
     data['count'] = len(data['data'])
     data['total'] = News.get_total()
     return data
@@ -191,7 +191,7 @@ def category_retrieve():
     # limit = int(request.args.get('limit', PAGE_LIMIT))
     # category还要start??, 
     data = {}
-    data['start'] = start
+    data['start'] = 0
     data['data'] = Category.get_all()
     data['count'] = len(data['data'])
 

@@ -2,6 +2,7 @@
 
 from models import Model, store
 from models.category import Category
+from utils.memcache import memcache
 import random
 from utils.consts import *
 
@@ -28,23 +29,37 @@ class News(Model):
 
     @property
     def content_short(self):
-        return self.content[:MAX_SHORT_CONTENT]
+        import re
+        htmlStruct = re.compile(r'<[^>]+>')
+        return htmlStruct.sub('',self.content)[:MAX_SHORT_CONTENT]
 
     @property
     def category(self):
-        return Category.get(self.category_id).name
+        return Category.get_dict()[self.category_id].name
+
+    @property
+    def author(self):
+        from models.user import User
+        return User.get_dict()[self.author_id].nickname
 
     @classmethod
+    @memcache("nserver:news_all[<order>,<start>,<limit>]")
     def get_all(cls, order, start=0, limit=PAGE_LIMIT):
-        sql = 'select * from {} order by %s desc limit %s,%s'.format(cls.__table__)
-        params = (order, start, limit)
+        sql = 'select * from {} order by {} limit %s,%s'.format(cls.__table__, order)
+        params = (start, limit)
         rs = store.execute(sql, params)
         return [cls(**r).ldict() for r in rs] if rs else []
 
     @classmethod
+    def get_dict(cls, order, start=0, limit=PAGE_LIMIT):
+        values = cls.get_all(order, start, limit)
+        keys = [ item.ldict()['id'] for item in values ]
+        return dict(zip(keys,values))
+
+    @classmethod
     def get_by_category(cls, cid, order, start=0, limit=PAGE_LIMIT):
-        sql = 'select * from {} where category_id=%s order by %s desc limit %s,%s'.format(cls.__table__)
-        params = (cid, order, start, limit)
+        sql = 'select * from {} where category_id=%s order by {} limit %s,%s'.format(cls.__table__, order)
+        params = (cid, start, limit)
         rs = store.execute(sql, params)
         return [cls(**r).ldict() for r in rs] if rs else []
 
@@ -56,6 +71,7 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache("nserver:news[<alias>]")
     def get_by_alias(cls, alias):
         sql = 'select * from {} where alias_title=%s'.format(cls.__table__)
         params = (alias, )
@@ -63,6 +79,7 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache("nserver:news_total")
     def get_total(cls):
         sql = '''select count(*) as total from {}'''.format(cls.__table__)
         rs  = store.execute(sql)
@@ -81,7 +98,7 @@ class News(Model):
             print "Error", e.args[0], e.args[1]
             store.rollback()
         print _id
-        return cls.get(_id) if _id else None
+        return cls.get(id=_id) if _id else None
 
     def ldict(self):
         return {
@@ -96,8 +113,14 @@ class News(Model):
             'category_id':self.category_id,
             'category':self.category,
             'author_id':self.author_id,
-            'create_time':self.create_time
+            'create_time':self.create_time,
+            'author': self.author
         }
+
+    @classmethod
+    @memcache("nserver:news[<id>]")
+    def get(cls, id):
+        return super(News, cls).get(id)
 
 
 

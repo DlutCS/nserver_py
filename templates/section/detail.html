@@ -7,17 +7,21 @@
             <h2>{{ news.title }}</h2>
           </div>
           <div class="info-box">
-            <span class="author">Me看阅读</span>
+            <span class="author">{{news.author}}</span>
             <span class="dividor">｜</span>
-            <span class="time">2015-10-17 01:55</span>
+            <span class="time">{{news.create_time}}</span>
           </div>
           <div class="detail-box">
             <blockquote>
               <span class="abstract-title">摘要:</span>
+              {% autoescape false %}
               {{ news.content_short }}
+              {% endautoescape %}
             </blockquote>
             <div class="detail-html">
-              <p>{{ news.content }}</p>
+              {% autoescape false %}
+              {{ news.content }}
+              {% endautoescape %}
             </div>
           
           </div>

@@ -30,6 +30,9 @@ class Model(object):
 
     @classmethod
     def update(cls, id, keys, values):
+        keys = keys if isinstance(keys, list) else [keys]
+        values = values if isinstance(values, list) else [values]
+
         keyformat = '=%s,'.join(keys) + '=%s'
         sql = 'update {} set {} where id=%s'.format(cls.__table__, keyformat)
         values.append(int(id))
@@ -43,7 +46,7 @@ class Model(object):
             print 'except:', sql % params
             store.rollback()
         print 'rcnt=', rcnt
-        return cls.get(id) if rcnt > 0 else None
+        return cls.get(id=id) if rcnt > 0 else None
 
 
 

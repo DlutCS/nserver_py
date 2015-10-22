@@ -3,7 +3,7 @@
     <div class="news-image-wrap">
       
       <div class="image-box">
-        <span class="badge">{{ news.id }}</span>
+        <span class="badge">{{ news.category }}</span>
         <img class="image" src="{{ news.cover_url }}" />
       </div>
       
@@ -14,14 +14,16 @@
         
       </div>
       <div class="info second">
-        <span class="author">Me看阅读</span>
+        <span class="author">{{ news.author }}</span>
         <span class="dividor">｜</span>
-        <span class="time">2015-10-17 01:55</span>
+        <span class="time">{{news.create_time}}</span>
         <span class="dividor">｜</span>
-        <span class="comment">评论 0</span>
+        <span class="comment">阅读 {{news.read_count}}</span>
       </div>
       <div class="info paragraph">
+      {% autoescape false %}
         <p class="abstract">{{ news.content_short }}</p>
+      {% endautoescape %}
       </div>
       <div class="info bottom">
         <span class="tags">百度</span>
