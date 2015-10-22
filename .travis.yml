@@ -16,14 +16,14 @@ install: echo 'install'
 script: 
  - echo 'script'
  # python
- - make sync
- - make test
+ # - make sync
+ # - make test
 
  - echo 'script done'
 
 
  - echo 'clean'
- - make clean
+ # - make clean
 
 branches:
   only:
