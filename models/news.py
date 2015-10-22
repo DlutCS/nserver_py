@@ -2,6 +2,7 @@
 
 from models import Model, store
 from models.category import Category
+from utils.memcache import memcache
 import random
 from utils.consts import *
 
@@ -112,6 +113,11 @@ class News(Model):
             'create_time':self.create_time,
             'author': self.author
         }
+
+    @classmethod
+    @memcache("nserver:news[<id>]")
+    def get(cls, id):
+        return super(News, cls).get(id)
 
 
 
