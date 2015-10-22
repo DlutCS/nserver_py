@@ -70,6 +70,7 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache("nserver:news[<alias>]")
     def get_by_alias(cls, alias):
         sql = 'select * from {} where alias_title=%s'.format(cls.__table__)
         params = (alias, )

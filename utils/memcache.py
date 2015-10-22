@@ -16,7 +16,7 @@ Usage:
     # call
     get_news(id=100)
 '''
-def memcache(key, expire=100):
+def memcache(memkey, expire=100):
     def _(func):
         if not app.config['MEMCACHE_ON']:
             return func
@@ -26,6 +26,7 @@ def memcache(key, expire=100):
         client = bmemcached.Client((host,), user, passwd)
         @wraps(func)
         def wrapper(*args, **kwargs):
+            key = memkey
             p = re.compile(r'(\<(\w+?)\>)')
             matches = p.findall(key)
             if matches:
@@ -38,11 +39,11 @@ def memcache(key, expire=100):
                     key = key.replace(full, value)
             r = client.get(key)
             if not r:
-                print '###not shoot ', key
+                print 'Memcache:###not shoot ', key
                 r = func(*args, **kwargs)
                 client.set(key, r, expire)
             else:
-                print '###shooted ', key
+                print 'Memcache:###shooted ', key
             return r
         return wrapper
     return _
