@@ -17,9 +17,9 @@ def get_categorys():
 @restful('/news/<id>/')
 def get_news(id):
     if id.isdigit():
-        news = News.get(id)
+        news = News.get(id=id)
     else:
-        news = News.get_by_alias(id)
+        news = News.get_by_alias(alias=id)
     if not news:
         return error(10003, 'news id not found')
     return news
