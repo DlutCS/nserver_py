@@ -27,8 +27,8 @@ def memcache(memkey, expire=100):
         client = bmemcached.Client((host,), user, passwd)
 
         argspec = inspect.getargspec(func)
-        argval = list(argspec.defaults)
-        argkey = list(argspec.args)
+        argval = list(argspec.defaults or [])
+        argkey = list(argspec.args or [])
         argval = [None]*( len(argkey)-len(argval) ) + argval
         argdict = dict(zip(argkey, argval))
 
