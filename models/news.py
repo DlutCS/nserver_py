@@ -43,6 +43,7 @@ class News(Model):
         return User.get_dict()[self.author_id].nickname
 
     @classmethod
+    @memcache("nserver:news_all[<order>,<start>,<limit>]")
     def get_all(cls, order, start=0, limit=PAGE_LIMIT):
         sql = 'select * from {} order by {} limit %s,%s'.format(cls.__table__, order)
         params = (start, limit)
@@ -78,6 +79,7 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache("nserver:news_total")
     def get_total(cls):
         sql = '''select count(*) as total from {}'''.format(cls.__table__)
         rs  = store.execute(sql)
