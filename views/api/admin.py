@@ -110,7 +110,7 @@ def news_create():
 def news_retrieve():
     id = request.args.get('id', 0)
     if id:
-        news = News.get(id)
+        news = News.get(id=id)
         if not news:
             return error(404, 'news not exist')
         return news
