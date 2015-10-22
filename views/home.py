@@ -43,7 +43,7 @@ class HomeNewsView(MethodView):
         if not nid:
             abort(404)
 
-        news = News.get(nid) or News.get_by_alias(nid)
+        news = News.get(id=nid) or News.get_by_alias(alias=nid)
         if not news:
             abort(404)
 
