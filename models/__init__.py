@@ -46,7 +46,7 @@ class Model(object):
             print 'except:', sql % params
             store.rollback()
         print 'rcnt=', rcnt
-        return cls.get(id) if rcnt > 0 else None
+        return cls.get(id=id) if rcnt > 0 else None
 
 
 
