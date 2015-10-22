@@ -33,7 +33,7 @@ def memcache(memkey, expire=100):
                 for (full, name) in matches:
                     if not kwargs.has_key(name):
                         raise KeyError('Memcache: cannot find key: %s in kwargs!' % (full))
-                    value = kwargs[name]
+                    value = str(kwargs[name])
                     value = value.replace(r"'", r"\'")
                     value = r"'" + value + r"'"
                     key = key.replace(full, value)
