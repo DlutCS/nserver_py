@@ -25,45 +25,42 @@
             </div>
           
           </div>
-          <dlv class="relative-box">
-            分享给：微信
-          </dlv>
-          <div class="comment-box">
-            <h2>评论</h2>
-            
-              <div class="submit-commont submit-primary">
-                提交评论框
-              </div>
-              <ul class="commonts">
-                <li>
-                  <div class="comment-item">
-                    评论内容框
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-item">
-                    评论内容框
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-item">
-                    评论内容框
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-item">
-                    评论内容框
-                  </div>
-                </li>
-                <li>
-                  <div class="comment-item">
-                    评论内容框
-                  </div>
-                </li>
+          
+          <div class="relative-box ds-share flat" data-thread-key="{{news.id}}" data-title="{{news.title}}" data-images="此处请替换为分享时显示的图片的链接地址" data-content="此处请替换为分享时显示的内容" data-url="#">
+            <div class="ds-share-inline">
+              <ul  class="ds-share-icons-16">
+                
+                <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+                <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+                <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
                 
               </ul>
-            
+              <div class="ds-share-icons-more">
+              </div>
+            </div>
+         </div>
+
+          <!-- 多说评论框 start -->
+          <div class="comment-box ds-thread" data-thread-key="{{news.id}}" data-title="{{news.title}}" data-url="#">
+            <h2>评论</h2>
           </div>
+        <!-- 多说评论框 end -->
+        <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+        <script type="text/javascript">
+        var duoshuoQuery = {short_name:"dlutcs"};
+          (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] 
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+          })();
+          </script>
+        <!-- 多说公共JS代码 end -->
+          
         </div>
       </div>
     </div>
