@@ -130,13 +130,13 @@ def news_retrieve():
 @restful('/admin/news/update/', methods=['POST'])
 @admin_require
 def news_update():
+    valid_column = ['title','author_id','category_id','cover_url','content']
     keys = []
     values = []
     for k, v in request.form.iteritems():
-        if k != 'id':
+        if k in valid_column and k != 'id':
             keys.append(k)
             values.append(v)
-    print keys, values
 
     try:
         id = request.form['id']

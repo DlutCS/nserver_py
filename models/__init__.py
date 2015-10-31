@@ -46,7 +46,10 @@ class Model(object):
             print 'except:', sql % params
             store.rollback()
         print 'rcnt=', rcnt
-        return cls.get(id=id) if rcnt > 0 else None
+        newData = cls.get(id=id)
+        #当数据未修改时，影响的行也为0
+        #这种情况下，需要判定id是否存在
+        return newData if rcnt > 0 or newData is not None else None
 
 
 
