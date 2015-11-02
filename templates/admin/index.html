@@ -2,6 +2,7 @@
 
 {% block styles %}
   
+<link rel="stylesheet" type="text/css" href="{{ static_admin_for('/vendor.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ static_admin_for('/foundation.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ static_admin_for('/admin.css') }}">
 {% endblock %}
@@ -10,8 +11,12 @@
 {% if config['ENV'] == 'DEV' %}
   <script type="text/javascript"  src="{{ static_admin_for('/hot.bundle.js') }} " ></script>
 {% endif %}
-  <!--<script type="text/javascript"  src="//127.0.0.1:9090/angular.js"></script>-->
+  <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.29/angular.min.js"></script>
+
+  <script type="text/javascript"  src="{{ static_admin_for('/vendor.bundle.js') }}" ></script>
   <script type="text/javascript"  src="{{ static_admin_for('/admin.bundle.js') }}" ></script>
+  <script type="text/javascript"  src="{{ static_admin_for('/foundation.bundle.js') }}" ></script>
+
 {% endblock %}
 
 {% block title %}
