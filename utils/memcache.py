@@ -19,7 +19,7 @@ Usage:
 '''
 def memcache(memkey=None, expire=100, clear=False):
     def _(func):
-        if not memkey:
+        if not memkey and not clear:
             return func
         if not app.config['MEMCACHE_ON']:
             return func
