@@ -80,13 +80,13 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
-    @memcache("nserver:news_total")
     def get_total(cls):
         sql = '''select count(*) as total from {}'''.format(cls.__table__)
         rs  = store.execute(sql)
         return rs[0]['total']
 
     @classmethod
+    @memcache(clear=True)
     def create(cls, title, content, cover_url, category_id, author_id,  alias_title=None):
         sql = '''insert into {}(title, alias_title, content, cover_url, category_id, author_id, create_time)
                 values(%s, %s, %s, %s, %s, %s, %s)

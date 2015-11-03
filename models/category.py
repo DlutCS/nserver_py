@@ -30,6 +30,7 @@ class Category(Model):
         return dict(zip(keys,values))
 
     @classmethod
+    @memcache(clear=True)
     def create(cls, name):
         sql = 'insert into {}(name) values(%s)'.format(cls.__table__)
         params = (name, )
@@ -42,6 +43,7 @@ class Category(Model):
         return cls.get(id=_id) if _id else None
 
     @classmethod
+    @memcache(clear=True)
     def update(cls, id, name):
         sql = 'update {} set name=%s where id=%s'.format(cls.__table__)
         params = (name, id)

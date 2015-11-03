@@ -96,6 +96,7 @@ class User(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache(clear=True)
     def create(cls, username, passwd, nickname, gender, birthday, avatar_url):
         salt = ''.join(random.sample(string.ascii_letters, 6))
         passwd = md5.new(passwd + salt).hexdigest()

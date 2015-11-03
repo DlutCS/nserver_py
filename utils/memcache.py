@@ -17,7 +17,7 @@ Usage:
     # call
     get_news(id=100)
 '''
-def memcache(memkey, expire=100):
+def memcache(memkey, expire=100, clear=False):
     def _(func):
         if not app.config['MEMCACHE_ON']:
             return func
@@ -31,6 +31,10 @@ def memcache(memkey, expire=100):
         argkey = list(argspec.args or [])
         argval = [None]*( len(argkey)-len(argval) ) + argval
         argdict = dict(zip(argkey, argval))
+
+        if clear:
+            client.flush_all()
+            return func
 
         @wraps(func)
         def wrapper(*args, **kwargs):

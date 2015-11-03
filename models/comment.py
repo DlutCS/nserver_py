@@ -22,6 +22,7 @@ class Comment(Model):
         return User.get(self.author_id).dict()
 
     @classmethod
+    @memcache(clear=True)
     def create(cls, content, news_id, author_id):
         sql = '''insert into {}(content, news_id, author_id, create_time)
                  values(%s, %s, %s, %s)
@@ -36,6 +37,7 @@ class Comment(Model):
         return cls.get(id=_id) if _id else None
 
     @classmethod
+    @memcache(clear=True)
     def update(cls, id, content, news_id, author_id):
         sql = '''update {} set content=%s, news_id=%s, author_id=%s where id=%s'''.format(cls.__table__)
         params = (content, news_id, author_id, id)
