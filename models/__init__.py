@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from models import store
+from utils.memcache import memcache
+
 
 class Model(object):
 
