@@ -80,6 +80,12 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    def random(cls):
+        sql = ''''update tbl_news set read_count=read_count+1 where id=ceil({}*RAND());'''.format(self.get_total()+1000)
+        rs = store.execute(sql)
+        return True
+
+    @classmethod
     def get_total(cls):
         sql = '''select count(*) as total from {}'''.format(cls.__table__)
         rs  = store.execute(sql)
