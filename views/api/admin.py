@@ -11,7 +11,7 @@ from models.category import Category
 import md5
 from flask.ext.login import login_user, logout_user, login_required
 from flask.ext.login import current_user
-
+from utils.memcache import memcache
 
 @restful('/admin/login/', methods=['POST'])
 def login():
@@ -104,7 +104,11 @@ def news_create():
         return error(100021, 'create news failed')
     return news
 
-
+@restful('/admin/memcache/flush/', methods=['GET','POST'])
+@memcache(clear=True)
+def memcache_flush():
+    return 'ok'
+    
 @restful('/admin/news/retrieve/', methods=['GET'])
 @admin_require
 def news_retrieve():
