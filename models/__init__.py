@@ -14,6 +14,7 @@ class Model(object):
         return cls(**rs[0]) if rs else None
 
     @classmethod
+    @memcache(clear=True)
     def delete(cls, ids):
         state = False
         sql = 'delete from {} where id=%s'.format(cls.__table__)
@@ -29,6 +30,7 @@ class Model(object):
         return state
 
     @classmethod
+    @memcache(clear=True)
     def update(cls, id, keys, values):
         keys = keys if isinstance(keys, list) else [keys]
         values = values if isinstance(values, list) else [values]
