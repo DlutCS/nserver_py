@@ -2,6 +2,8 @@
 
 from models import Model, store
 from utils.consts import now
+from utils.memcache import memcache
+
 
 class Comment(Model):
 

@@ -17,8 +17,10 @@ Usage:
     # call
     get_news(id=100)
 '''
-def memcache(memkey, expire=100, clear=False):
+def memcache(memkey=None, expire=100, clear=False):
     def _(func):
+        if not memkey:
+            return func
         if not app.config['MEMCACHE_ON']:
             return func
         host = app.config['MEMCACHE_HOST']
