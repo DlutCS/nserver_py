@@ -109,7 +109,7 @@ class User(Model):
             print "Error", e.args[0], e.args[1]
             store.rollback()
         print _id
-        return cls.get(_id) if _id else None
+        return cls.get(id=_id) if _id else None
 
     @classmethod
     def get_by_username(cls, username):

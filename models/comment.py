@@ -33,7 +33,7 @@ class Comment(Model):
         except e:
             print "Error", e.args[0], e.args[1]
             store.rollback()
-        return cls.get(_id) if _id else None
+        return cls.get(id=_id) if _id else None
 
     @classmethod
     def update(cls, id, content, news_id, author_id):
@@ -45,7 +45,7 @@ class Comment(Model):
         except e:
             print "Error", e.args[0], e.args[1]
             store.rollback()
-        return cls.get(_id) if _id else None
+        return cls.get(id=_id) if _id else None
 
 
 

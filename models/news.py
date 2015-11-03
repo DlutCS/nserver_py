@@ -52,11 +52,12 @@ class News(Model):
 
     @classmethod
     def get_dict(cls, order, start=0, limit=PAGE_LIMIT):
-        values = cls.get_all(order, start, limit)
+        values = cls.get_all(order=order, start=start, limit=limit)
         keys = [ item.ldict()['id'] for item in values ]
         return dict(zip(keys,values))
 
     @classmethod
+    @memcache("nserver:news_category[<cid>,<order>,<start>,<limit>]")
     def get_by_category(cls, cid, order, start=0, limit=PAGE_LIMIT):
         sql = 'select * from {} where category_id=%s order by {} limit %s,%s'.format(cls.__table__, order)
         params = (cid, start, limit)
@@ -120,7 +121,7 @@ class News(Model):
     @classmethod
     @memcache("nserver:news[<id>]")
     def get(cls, id):
-        return super(News, cls).get(id)
+        return super(News, cls).get(id=id)
 
 
 
