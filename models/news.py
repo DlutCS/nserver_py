@@ -81,7 +81,7 @@ class News(Model):
 
     @classmethod
     def random(cls):
-        sql = ''''update tbl_news set read_count=read_count+1 where id=ceil({}*RAND());'''.format(self.get_total()+1000)
+        sql = ''''update tbl_news set read_count=read_count+1 where id=ceil({}*RAND());'''.format(cls.get_total()+1000)
         rs = store.execute(sql)
         return True
 
