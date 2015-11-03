@@ -113,7 +113,8 @@ def memcache_flush():
 @restful('/admin/control/random/<int:cnt>', methods=['GET','POST'])
 def random(cnt=10):
     cnt = cnt if cnt > 10 else 10
-    News.random(cnt)
+    for i in range(cnt):
+        News.random(1)
     return 'ok'
 
 @restful('/admin/news/retrieve/', methods=['GET'])
