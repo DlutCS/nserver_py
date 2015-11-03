@@ -73,10 +73,10 @@ def admin_require(func):
             return error(10111, 'require login')
         args = func.__name__.split('_')
         mod, action = args[0], args[1]
-        group_id = User.get(current_user.get_id()).group_id
+        group_id = User.get(id=current_user.get_id()).group_id
         if not group_id:
             return error(10112, 'user cannot find group id')
-        auth_value = Group.get(group_id).__getattribute__(mod)
+        auth_value = Group.get(id=group_id).__getattribute__(mod)
         # print "auth_value=", auth_value
         index = action_arr.index(action)
         index = len(action_arr) - index - 1
@@ -121,7 +121,7 @@ def news_retrieve():
         limit = PAGE_MAX
     data = {}
     data['start'] = start
-    data['data'] = News.get_all('create_time desc', int(start), int(limit))
+    data['data'] = News.get_all(order='create_time desc', start=int(start), limit=int(limit))
     data['count'] = len(data['data'])
     data['total'] = News.get_total()
     return data
@@ -182,7 +182,7 @@ def category_create():
 def category_retrieve():
     id = request.args.get('id', 0)
     if id:
-        category = Category.get(id)
+        category = Category.get(id=id)
         if not category:
             return error(404, 'category not exist')
         return category
@@ -240,7 +240,7 @@ def user_create():
 def user_retrieve():
     id = request.args.get('id', 0)
     if id:
-        user = User.get(id)
+        user = User.get(id=id)
         if not user:
             return error(404, 'user not exist')
         return user
@@ -252,7 +252,7 @@ def user_retrieve():
 
     data = {}
     data['start'] = start
-    data['data'] = User.get_all(start, limit)
+    data['data'] = User.get_all(start=start, limit=limit)
     data['count'] = len(data['data'])
     data['total'] = User.get_total()
     return data

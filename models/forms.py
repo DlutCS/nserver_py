@@ -20,7 +20,7 @@ class LoginForm(Form):
         if not rv:
             return False
         _passwd = md5.new(self.password.data).hexdigest()
-        user = User.validate(self.username.data, _passwd)
+        user = User.validate(username=self.username.data, passwd=_passwd)
         if not user:
             self.username.errors.append(u'用户名或密码错误')
             return False
@@ -46,7 +46,7 @@ class RegisterForm(Form):
         rv = Form.validate(self)
         if not rv:
             return False
-        if User.get_by_username(self.username.data):
+        if User.get_by_username(username=self.username.data):
             self.username.errors.append(u'用户名已存在')
             return False
         user = User.create(self.username.data, self.passwd.data, self.nickname.data, 

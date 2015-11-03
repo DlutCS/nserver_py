@@ -13,7 +13,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 @lm.user_loader
 def load_user(id):
-    return User.get(int(id))
+    return User.get(id=int(id))
 
 @lm.token_loader
 def load_user_from_token(token):

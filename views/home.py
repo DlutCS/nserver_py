@@ -28,9 +28,9 @@ class HomeCategoryView(MethodView):
             abort(404)
         if cid == 1:
             return redirect(url_for('main.home'))
-        news_header = News.get_by_category(cid, order='create_time desc', start=0, limit=7)
-        news_latest = News.get_by_category(cid, order='create_time desc', start=7)
-        news_popular = News.get_by_category(cid, order='read_count desc', start=0)
+        news_header = News.get_by_category(cid=cid, order='create_time desc', start=0, limit=7)
+        news_latest = News.get_by_category(cid=cid, order='create_time desc', start=7)
+        news_popular = News.get_by_category(cid=cid, order='read_count desc', start=0)
         loginform = LoginForm()
         regform = RegisterForm()
         return render_template('index.html', **locals())
