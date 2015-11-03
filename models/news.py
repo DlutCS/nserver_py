@@ -80,8 +80,12 @@ class News(Model):
         return cls(**rs[0]) if rs else None
 
     @classmethod
-    def random(cls):
-        sql = '''update tbl_news set read_count=read_count+1 where id=ceil({}*RAND());'''.format(cls.get_total()+1000)
+    def random(cls, count):
+        count = 1000 if count > 1000 else count
+        count = 10 if count < 10 else count
+        sql = '''update tbl_news set read_count=read_count+1 where id=ceil({}*RAND());'''.format(int(cls.get_total())+1000)
+        print sql
+        sql = sql*count
         rs = store.execute(sql)
         return True
 
