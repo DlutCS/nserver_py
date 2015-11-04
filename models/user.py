@@ -89,9 +89,15 @@ class User(Model):
         if not salt:
             return None
         print '##salt=' , salt
-        passwd = md5.new(passwd+salt).hexdigest()
+        passwdmd5 = md5.new(passwd+salt).hexdigest()
+        print 'log pass %s salt %s md5 %s' % (passwd, salt, passwdmd5)
+        sql = 'select * from {} where username=%s'.format(cls.__table__)
+        params = (username,)
+        rs = store.execute(sql, params)
+        print rs[0]
+
         sql = 'select * from {} where username=%s and passwd=%s'.format(cls.__table__)
-        params = (username, passwd)
+        params = (username, passwdmd5)
         rs = store.execute(sql, params)
         return cls(**rs[0]) if rs else None
 
@@ -99,10 +105,11 @@ class User(Model):
     @memcache(clear=True)
     def create(cls, username, passwd, nickname, gender, birthday, avatar_url):
         salt = ''.join(random.sample(string.ascii_letters, 6))
-        passwd = md5.new(passwd + salt).hexdigest()
+        passwdmd5 = md5.new(passwd + salt).hexdigest()
+        print 'reg pass %s salt %s md5 %s' % (passwd, salt, passwdmd5)
         sql = '''insert into {}(username, passwd, nickname, salt, gender, birthday, avatar_url, register_time) 
                  values(%s, %s ,%s, %s, %s, %s, %s, %s)'''.format(cls.__table__)
-        params = (username, passwd, nickname, salt, gender, birthday, avatar_url, now())
+        params = (username, passwdmd5, nickname, salt, gender, birthday, avatar_url, now())
         try:
             store.execute(sql, params)
             _id = store.commit()

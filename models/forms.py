@@ -19,8 +19,8 @@ class LoginForm(Form):
         rv = Form.validate(self)
         if not rv:
             return False
-        _passwd = md5.new(self.password.data).hexdigest()
-        user = User.validate(username=self.username.data, passwd=_passwd)
+        passwdmd5 = md5.new(self.password.data).hexdigest()
+        user = User.validate(username=self.username.data, passwd=passwdmd5)
         if not user:
             self.username.errors.append(u'用户名或密码错误')
             return False
@@ -32,9 +32,9 @@ class LoginForm(Form):
 class RegisterForm(Form):
 
     username  = StringField(u'用户名', [validators.Length(min=4, max=16)])
-    password  = PasswordField(u'密码', [validators.Length(min=6, max=16)])
+    passwd  = PasswordField(u'密码', [validators.Length(min=6, max=16)])
     nickname  = StringField(u'昵称', [validators.Length(min=1, max=16)])
-    gender    = RadioField(u'性别',[validators.InputRequired()], choices=[(1,u'男'),(0,u'女')])
+    gender    = RadioField(u'性别',[validators.InputRequired()], choices=[('1',u'男'),('0',u'女')])
     birthday  = DateField(u'生日',[validators.InputRequired()], format='%Y-%m-%d')
     avatar_url= StringField(u'头像', [validators.Length(min=1, max=4000)])
 
@@ -43,13 +43,15 @@ class RegisterForm(Form):
         self.user = None
 
     def validate(self):
+        print 'User Reg %s %s' % (self.username.data, self.gender.data)
         rv = Form.validate(self)
         if not rv:
             return False
         if User.get_by_username(username=self.username.data):
             self.username.errors.append(u'用户名已存在')
             return False
-        user = User.create(self.username.data, self.passwd.data, self.nickname.data, 
+        passwdmd5 = md5.new(self.passwd.data).hexdigest()
+        user = User.create(self.username.data, passwdmd5, self.nickname.data, 
                 self.gender.data, self.birthday.data, self.avatar_url.data)
         if not user:
             self.username.errors.append(u'创建失败')
