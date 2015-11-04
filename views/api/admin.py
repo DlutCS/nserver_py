@@ -13,6 +13,7 @@ from flask.ext.login import login_user, logout_user, login_required
 from flask.ext.login import current_user
 from utils.memcache import memcache
 
+
 @restful('/admin/login/', methods=['POST'])
 def login():
     '''
@@ -116,6 +117,49 @@ def random(cnt=10):
     for i in range(cnt):
         News.random(1)
     return 'ok'
+
+@restful('/admin/scrapy/config/', methods=['GET'])
+def scrapy_config():
+    import urllib2
+    import json
+    def get(url):
+        return json.loads( urllib2.urlopen(url).read() )
+
+    config = {}
+    projects = get('http://senyu.me:6800/listprojects.json')['projects']
+    config['projects'] = []
+    for p in projects:
+        versions = get('http://senyu.me:6800/listversions.json?project='+p)['versions']
+        spiders = get('http://senyu.me:6800/listspiders.json?project='+p)['spiders']
+        config['projects'].append({
+            'name': p,
+            'spiders': spiders,
+            'versions': versions
+            })
+
+    return config
+
+
+@restful('/admin/scrapy/status', methods=['GET'])
+def scrapy_status():
+    import urllib2
+    import json
+    def get(url):
+        return json.loads( urllib2.urlopen(url).read() )
+
+    status = {}
+    projects = get('http://senyu.me:6800/listprojects.json')['projects']
+    status['projects'] = {}
+    for p in projects:
+        jobs = get('http://senyu.me:6800/listjobs.json?project='+p)
+        status['projects'][p] = {
+            'name': p,
+            'running': jobs['running'][::-1],
+            'finished': jobs['finished'][:-9:-1],
+            'pending': jobs['pending'][::-1],
+            }
+
+    return status
 
 @restful('/admin/news/retrieve/', methods=['GET'])
 @admin_require
