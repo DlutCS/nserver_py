@@ -58,12 +58,18 @@ def news_by_category_latest(cid):
     data = {}
     start = request.args.get('start', 0)
     limit = request.args.get('limit', PAGE_LIMIT)
+    template  = request.args.get('template', False)
     if cid == 1: # 头条内容
         rs = News.get_all(order='create_time desc', start=int(start), limit=int(limit))
     else:
         rs = News.get_by_category(cid=cid, order='create_time desc', start=int(start), limit=int(limit))
     data['count'] = len(rs)
-    data['newslist'] = rs
+
+    if template:
+        data['template'] = render_template('component/news_loop.html', data=rs)
+    else:
+        data['newslist'] = rs
+    
     return data
 
 @restful('/newslist/category/<int:cid>/')
