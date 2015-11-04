@@ -305,7 +305,7 @@ def user_retrieve():
         if not user:
             return error(404, 'user not exist')
         return user
-    start = request.args.get('start', 0)
+    start = int(request.args.get('start', 0))
     limit = int(request.args.get('limit', PAGE_LIMIT))
 
     if limit > PAGE_MAX:
